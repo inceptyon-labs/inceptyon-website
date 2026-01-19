@@ -1,29 +1,82 @@
-# Inceptyon Labs Website
+# Inceptyon Labs
 
-A modern, responsive single-page website for Inceptyon Labs LLC — a creative technology studio developing innovative apps, immersive games, and intelligent tools.
+<p align="center">
+  <img src="public/logo.png" alt="Inceptyon Labs Logo" width="200">
+</p>
+
+<p align="center">
+  <strong>Designing the Future of Play, Productivity, and Discovery</strong>
+</p>
+
+<p align="center">
+  <a href="https://inceptyon.io">Website</a> •
+  <a href="https://apps.apple.com/us/app/incept%C3%BFon/id6753733758">Download INCEPTYON</a> •
+  <a href="mailto:hello@inceptyon.io">Contact</a>
+</p>
+
+---
+
+## About
+
+Inceptyon Labs LLC is an independent creative technology studio based in Tampa, Florida. We explore the intersection of imagination, design, and intelligence—crafting games, apps, and AI-driven tools that connect people to ideas in new ways.
+
+My son comes up with ideas, I build them. Sometimes it's a math tool, sometimes it's a clicker game. Inceptyon is our little workshop.
+
+If you enjoy what we make, a coffee helps keep the lights on: **[ko-fi.com/inceptyon](https://ko-fi.com/inceptyon)**
+
+This repository contains the source code for our marketing website at [inceptyon.io](https://inceptyon.io).
+
+## Featured Project: INCEPTYON
+
+<p align="center">
+  <a href="https://apps.apple.com/us/app/incept%C3%BFon/id6753733758">
+    <img src="public/INCEPTYON.png" alt="INCEPTYON Game" width="400">
+  </a>
+</p>
+
+**INCEPTYON** is an educational space science game that takes you on a journey across Jupiter's moons.
+
+> *"A geological consciousness spanning four worlds awakens beneath Jupiter's ice. You are the system administrator. Your consciousness is the key. Four nodes. One network. Your observation brings it to life."*
+
+### The Lore
+
+Beneath the Galilean moons lies an ancient, distributed crystalline intelligence known as **The Architect**—woven into the geological fabric of Europa, Ganymede, Callisto, and Io. For eons it dreamed. Now, with your arrival as Lead Xenobiologist for the **LPN Directive** (Lifeform Preservation & Nurture), it awakens—one moon at a time.
+
+**The Parker Protocol** is The Architect's reality engine—a process that collapses quantum probability into biological actuality. Did the lifeforms exist before you observed them? Both. Their potential was always there, encoded in the chemistry of each world. But their reality manifests only through your focused observation.
+
+### Download
+
+**[Download INCEPTYON on the App Store](https://apps.apple.com/us/app/incept%C3%BFon/id6753733758)**
+
+- Free to play, no ads
+- Ages 9+ educational content
+- Real planetary science from NASA/JPL-Caltech and ESA
+- Full accessibility support
+
+## Other Projects
+
+| Project | Description | Status |
+|---------|-------------|--------|
+| **Holocron** | Intelligent note and idea system for creative thinkers | Coming Soon |
+| **The Racket by Unwyned** | Your personal wine fixer | [Available](https://apps.apple.com/app/unwyned/id6755911748) |
+| **Fireball Fantasy Fiasco** | Competitive golf league companion app | Coming Soon |
+| **Alyqon** | Visual explorer for aliquot sums and iterative sequences | [Available](https://alyqon.inceptyon.io/) |
+| **Gugo** | Engagement and community platform | Coming Soon |
 
 ## Tech Stack
 
-- **React 19** - UI library (latest)
-- **Vite 7** - Fast build tool and dev server (latest)
-- **Tailwind CSS 3** - Utility-first CSS framework (latest stable)
-- **Framer Motion 12** - Animation library (latest)
-- **Space Grotesk & Inter** - Typography
+- **React 19** — UI library
+- **Vite 7** — Build tool and dev server
+- **Tailwind CSS 3** — Utility-first styling
+- **Framer Motion 12** — Animations
 
-## Quick Start
-
-### Prerequisites
-
-- Node.js 20+
-- npm, yarn, or pnpm
-
-### Local Development
+## Development
 
 ```bash
 # Install dependencies
 npm install
 
-# Start development server (opens at http://localhost:3000)
+# Start development server
 npm run dev
 
 # Build for production
@@ -33,170 +86,12 @@ npm run build
 npm run preview
 ```
 
-## Deployment
-
-### Cloudflare Pages (Live)
-
-This project is **currently deployed to Cloudflare Pages**.
-
-Visit: **https://inceptyon.io**
-
-To deploy your own fork to Cloudflare Pages:
-1. Push code to GitHub (repo is public)
-2. Connect repo to Cloudflare Pages in [Cloudflare Dashboard](https://dash.cloudflare.com)
-3. Build command: `npm run build`
-4. Output directory: `dist`
-
-### Docker (Legacy)
-
-Docker configuration is available for local development or self-hosting but is no longer actively maintained. If you need Docker, the old setup is in `Dockerfile` and `docker-compose.yml`.
-
-## Project Structure
-
-```
-inceptyon-web/
-├── public/
-│   ├── favicon.svg              # Custom favicon
-│   ├── robots.txt               # SEO optimization
-│   └── sitemap.xml              # Sitemap for crawlers
-├── src/
-│   ├── components/
-│   │   ├── NavBar.jsx           # Sticky navigation
-│   │   ├── Hero.jsx             # Hero section with CTA
-│   │   ├── About.jsx            # About section with features
-│   │   ├── Work.jsx             # Project showcase
-│   │   ├── Contact.jsx          # Contact info + social links
-│   │   ├── Footer.jsx           # Footer
-│   │   └── AnimatedBackground.jsx # Animated gradient background
-│   ├── App.jsx                  # Main app component
-│   ├── main.jsx                 # React entry point
-│   └── index.css                # Global styles + Tailwind
-├── index.html                   # HTML template with OpenGraph SEO
-├── package.json
-├── vite.config.js
-├── tailwind.config.js
-├── postcss.config.js
-└── CLAUDE.md                    # Development guidelines
-```
-
-## Features
-
-### Design & Style
-- **Color Palette**: Dark navy (#0A0F1F), cyan accent (#64FFDA), soft white (#E0E6F8)
-- **Typography**: Space Grotesk + Inter fonts
-- **Animations**: Framer Motion scroll-triggered effects, hover states
-- **Background**: Animated gradient orbs + subtle grid pattern
-
-### Sections
-1. **Sticky Navigation** - Translucent with backdrop blur, smooth scroll
-2. **Hero** - Bold headline, subtext, CTA button, scroll indicator
-3. **About** - Two-column layout with 3 feature cards
-4. **Work** - Responsive grid with 6 projects
-5. **Contact** - Email with hover underline, social icons (GitHub, LinkedIn, X/Twitter)
-6. **Footer** - Copyright, Privacy/Terms links
-
-### Technical
-- **SEO Ready**: OpenGraph, Twitter Card meta tags, structured data, sitemap, robots.txt
-- **Responsive**: Mobile-first design, works on all devices
-- **Performance**: Optimized with Vite, global CDN caching via Cloudflare
-- **Security**: HTTPS everywhere, security headers configured
-
-## Customization
-
-### Update Content
-
-**Projects** (`src/components/Work.jsx`):
-```jsx
-const projects = [
-  { title: 'Your Project', tagline: 'Description', status: 'Coming Soon' }
-]
-```
-
-**Email** (`src/components/Contact.jsx`):
-```jsx
-<a href="mailto:hello@inceptyon.io">
-```
-
-**Social Links** (`src/components/Contact.jsx`):
-```jsx
-<SocialIcon href="https://github.com/inceptyon" ... />
-```
-
-### Update Colors
-
-Edit `tailwind.config.js`:
-```js
-colors: {
-  navy: { 900: '#0A0F1F' },  // Background
-  cyan: { 400: '#64FFDA' },   // Accent
-}
-```
-
-## Deploy Your Own
-
-Choose your preferred hosting platform:
-
-### Cloudflare Pages (Recommended)
-1. Fork this repo on GitHub
-2. Go to [Cloudflare Dashboard](https://dash.cloudflare.com) → Pages
-3. Connect your forked repo
-4. Set build command: `npm run build`
-5. Set output directory: `dist`
-6. Deploy!
-
-### Vercel
-```bash
-npm i -g vercel
-vercel
-```
-
-### Netlify
-```bash
-npm i -g netlify-cli
-netlify deploy --prod
-```
-
-## Package Versions
-
-All packages use the **latest stable versions**:
-
-```json
-{
-  "react": "^19.2.3",
-  "react-dom": "^19.2.3",
-  "framer-motion": "^12.25.0",
-  "vite": "^7.3.1",
-  "tailwindcss": "^3.4.17",
-  "postcss": "^8.4.49",
-  "autoprefixer": "^10.4.23"
-}
-```
-
-## Performance
-
-- **Bundle Size**: ~200 KB (gzipped)
-- **Initial Load**: < 2s on 4G
-- **Lighthouse Score**: 95+ (Performance, Accessibility, Best Practices)
-- **CDN**: Global coverage via Cloudflare
-
-## Browser Support
-
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari 14+
-- Mobile browsers (iOS Safari, Chrome Android)
-
-## License
-
-© 2025 Inceptyon Labs LLC. All rights reserved.
-
 ## Contact
 
-- Email: hello@inceptyon.io
-- Website: https://inceptyon.io
+- **Website:** [inceptyon.io](https://inceptyon.io)
+- **Email:** [hello@inceptyon.io](mailto:hello@inceptyon.io)
+- **Support:** [support@inceptyon.io](mailto:support@inceptyon.io)
 
-## Support
+---
 
-For issues or questions:
-- Check [CLAUDE.md](./CLAUDE.md) for development guidelines
-- Email: hello@inceptyon.io
+© 2025 Inceptyon Labs LLC. All rights reserved.
