@@ -10,327 +10,847 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            line-height: 1.7;
-            color: #3a3028;
-            background: #faf8f5;
+        :root {
+            --parchment: #f7f3ed;
+            --parchment-deep: #efe9df;
+            --ink: #2c2418;
+            --ink-soft: #5c4f3e;
+            --ink-muted: #8a7d6d;
+            --terracotta: #b8593b;
+            --terracotta-deep: #943f26;
+            --terracotta-glow: #d4764e;
+            --sage: #7a8c5e;
+            --sage-soft: #a8b88e;
+            --sage-bg: #edf1e6;
+            --amber: #c4943a;
+            --amber-bg: #fdf5e6;
+            --rule: #ddd4c6;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Newsreader', Georgia, serif;
+            font-optical-sizing: auto;
+            line-height: 1.78;
+            color: var(--ink-soft);
+            background: var(--parchment);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- progress bar --- */
+        .progress-track {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            z-index: 100;
+            background: transparent;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--terracotta), var(--amber));
+            transition: width 60ms linear;
+        }
+
+        /* --- grain overlay --- */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.018;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 256px 256px;
+        }
+
+        /* --- header --- */
         .header {
-            background: linear-gradient(135deg, #c4704b 0%, #a85a3a 100%);
-            color: white;
-            padding: 3rem 2rem;
+            position: relative;
+            background: var(--ink);
+            color: var(--parchment);
+            padding: 5rem 2rem 4rem;
             text-align: center;
-            border-bottom: 4px solid #8a9a6e;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 20% 80%, rgba(184,89,59,0.25), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(122,140,94,0.15), transparent);
+            pointer-events: none;
+        }
+
+        .header-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--sage-soft);
+            margin-bottom: 1.5rem;
+        }
+
+        .header-badge::before,
+        .header-badge::after {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--sage-soft);
+            opacity: 0.5;
         }
 
         .header h1 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 2.5rem;
+            font-family: 'Fraunces', serif;
+            font-optical-sizing: auto;
+            font-size: clamp(2.4rem, 5vw, 3.4rem);
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+        }
+
+        .header h1 em {
+            font-style: italic;
             font-weight: 400;
-            margin-bottom: 0.5rem;
+            color: var(--terracotta-glow);
         }
 
         .header .subtitle {
-            font-size: 1.1rem;
-            color: #f5e6d8;
-            margin-top: 0.5rem;
+            font-family: 'Newsreader', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--ink-muted);
+            margin-bottom: 1.25rem;
         }
 
         .header .last-updated {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: #f5e6d8;
-            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            color: var(--ink-muted);
         }
 
+        /* --- nav back --- */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 2.5rem;
+            color: var(--terracotta);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--sage); }
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+        }
+        .back-link:hover svg { transform: translateX(-3px); }
+
+        /* --- main container --- */
         .container {
-            max-width: 800px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 3.5rem 2rem 4rem;
         }
 
+        /* --- tldr card --- */
         .tldr {
-            background: #f0ebe4;
-            border-left: 4px solid #8a9a6e;
-            padding: 1.5rem;
-            margin-bottom: 3rem;
-            border-radius: 0 8px 8px 0;
+            position: relative;
+            background: var(--ink);
+            color: var(--parchment);
+            padding: 2.25rem 2.5rem;
+            margin-bottom: 4rem;
+            border-radius: 2px;
+            overflow: hidden;
         }
 
-        .tldr h2 {
-            font-family: 'DM Serif Display', serif;
-            color: #3a3028;
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
+        .tldr::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--terracotta), var(--amber), var(--sage));
+        }
+
+        .tldr-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--terracotta-glow);
+            margin-bottom: 1rem;
         }
 
         .tldr p {
-            font-size: 1.05rem;
-            color: #3a3028;
+            font-size: 1.08rem;
+            line-height: 1.75;
+            color: rgba(247,243,237,0.85);
+        }
+
+        .tldr strong {
+            color: var(--parchment);
             font-weight: 500;
         }
 
-        h2 {
-            font-family: 'DM Serif Display', serif;
-            color: #3a3028;
-            font-size: 1.8rem;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
+        /* --- sections --- */
+        .section {
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-head {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .section-num {
+            font-family: 'Fraunces', serif;
+            font-size: 2.8rem;
+            font-weight: 300;
+            line-height: 1;
+            color: var(--rule);
+            flex-shrink: 0;
+            min-width: 2.5rem;
+            text-align: right;
+        }
+
+        .section-head h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.55rem;
             font-weight: 400;
+            color: var(--ink);
+            line-height: 1.25;
+            letter-spacing: -0.01em;
         }
 
         h3 {
-            font-family: 'DM Serif Display', serif;
-            color: #3a3028;
-            font-size: 1.3rem;
+            font-family: 'Fraunces', serif;
+            color: var(--ink);
+            font-size: 1.15rem;
             margin-top: 2rem;
             margin-bottom: 0.75rem;
-            font-weight: 400;
-        }
-
-        p, li {
-            margin-bottom: 1rem;
-            color: #5a4e42;
-            font-size: 1rem;
-        }
-
-        ul { margin-left: 2rem; margin-bottom: 1.5rem; }
-        li { margin-bottom: 0.5rem; }
-        strong { color: #3a3028; font-weight: 600; }
-
-        .highlight-box {
-            background: #fdf6ee;
-            border-left: 4px solid #d4a84b;
-            padding: 1.25rem;
-            margin: 1.5rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .info-box {
-            background: #eef3e8;
-            border-left: 4px solid #8a9a6e;
-            padding: 1.25rem;
-            margin: 1.5rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            font-size: 0.95rem;
-        }
-
-        th, td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid #e0d8cf;
-        }
-
-        th {
-            background: #c4704b;
-            color: white;
             font-weight: 600;
-            font-family: 'DM Serif Display', serif;
         }
 
-        tr:hover { background: #f5f0ea; }
+        p { margin-bottom: 1rem; font-size: 1.02rem; }
 
-        a { color: #c4704b; }
-        a:hover { color: #8a9a6e; }
+        ul {
+            margin-left: 1.25rem;
+            margin-bottom: 1.5rem;
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 0.6rem;
+            font-size: 1.02rem;
+            padding-left: 0.5rem;
+            position: relative;
+        }
+
+        li::before {
+            content: '';
+            position: absolute;
+            left: -1rem;
+            top: 0.65rem;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--terracotta);
+            opacity: 0.5;
+        }
+
+        strong { color: var(--ink); font-weight: 500; }
+
+        a {
+            color: var(--terracotta);
+            text-decoration-color: rgba(184,89,59,0.3);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s;
+        }
+        a:hover { text-decoration-color: var(--terracotta); }
+
+        /* --- divider --- */
+        .section-divider {
+            border: none;
+            height: 1px;
+            background: var(--rule);
+            margin: 0 0 3rem;
+        }
+
+        /* --- data table as cards --- */
+        .data-grid {
+            display: grid;
+            gap: 1px;
+            background: var(--rule);
+            border: 1px solid var(--rule);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .data-row {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr;
+            background: var(--parchment);
+            transition: background 0.15s;
+        }
+
+        .data-row:hover { background: var(--parchment-deep); }
+
+        .data-row.data-header {
+            background: var(--ink);
+        }
+
+        .data-row.data-header .data-cell {
+            color: var(--parchment-deep);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 400;
+            padding: 0.85rem 1rem;
+        }
+
+        .data-cell {
+            padding: 0.9rem 1rem;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: var(--ink-soft);
+        }
+
+        .data-cell:first-child {
+            font-weight: 500;
+            color: var(--ink);
+        }
+
+        .data-cell:last-child {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--ink-muted);
+        }
+
+        /* --- callout boxes --- */
+        .callout {
+            position: relative;
+            padding: 1.5rem 1.75rem;
+            margin: 1.75rem 0;
+            border-radius: 2px;
+        }
+
+        .callout-sage {
+            background: var(--sage-bg);
+            border-left: 3px solid var(--sage);
+        }
+
+        .callout-amber {
+            background: var(--amber-bg);
+            border-left: 3px solid var(--amber);
+        }
+
+        .callout p {
+            margin-bottom: 0.5rem;
+            font-size: 0.97rem;
+        }
+
+        .callout p:last-child { margin-bottom: 0; }
+
+        .callout-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        /* --- mic section special card --- */
+        .mic-card {
+            background: white;
+            border: 1px solid var(--rule);
+            border-radius: 2px;
+            padding: 2rem 2.25rem;
+            margin: 1.75rem 0;
+            position: relative;
+        }
+
+        .mic-card::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 1.5rem;
+            right: 1.5rem;
+            height: 3px;
+            background: linear-gradient(90deg, var(--sage), transparent);
+            border-radius: 0 0 2px 2px;
+        }
+
+        .mic-card h4 {
+            font-family: 'Fraunces', serif;
+            font-weight: 400;
+            font-size: 1rem;
+            color: var(--ink);
+            margin-bottom: 0.35rem;
+        }
+
+        .mic-card p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        .mic-features {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .mic-feature {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .mic-icon {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            margin-top: 0.15rem;
+        }
+
+        .mic-icon.on-device { background: var(--sage-bg); color: var(--sage); }
+        .mic-icon.no-record { background: var(--amber-bg); color: var(--amber); }
+        .mic-icon.optional { background: #f0eaee; color: var(--terracotta); }
+
+        /* --- version stamp --- */
+        .version-stamp {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            padding: 1.75rem 0;
+            margin: 3rem 0 0;
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .version-stamp dt {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .version-stamp dd {
+            font-family: 'Fraunces', serif;
+            font-size: 1.1rem;
+            color: var(--ink);
+        }
+
+        /* --- footer --- */
+        .colophon {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            line-height: 1.7;
+        }
 
         .footer {
-            background: #f0ebe4;
-            padding: 2rem;
+            background: var(--ink);
+            padding: 1.75rem 2rem;
             text-align: center;
-            margin-top: 3rem;
-            border-top: 1px solid #e0d8cf;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
         }
 
         .footer a {
-            color: #3a3028;
+            color: var(--ink-muted);
             text-decoration: none;
-            font-weight: 500;
-            margin: 0 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.2s;
         }
 
-        .footer a:hover { color: #c4704b; text-decoration: underline; }
+        .footer a:hover { color: var(--parchment); }
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: 2rem;
-            color: #c4704b;
-            text-decoration: none;
-            font-weight: 500;
+        /* --- responsive --- */
+        @media (max-width: 640px) {
+            .header { padding: 3.5rem 1.5rem 3rem; }
+            .container { padding: 2.5rem 1.5rem 3rem; }
+            .tldr { padding: 1.75rem 1.5rem; }
+            .section-num { font-size: 2rem; min-width: 1.8rem; }
+            .section-head h2 { font-size: 1.3rem; }
+            .data-row { grid-template-columns: 1fr; }
+            .data-row.data-header { display: none; }
+            .data-cell {
+                padding: 0.5rem 1rem;
+            }
+            .data-cell:first-child {
+                padding-top: 1rem;
+                font-size: 0.95rem;
+            }
+            .data-cell:last-child {
+                padding-bottom: 1rem;
+                border-bottom: 1px solid var(--rule);
+            }
+            .data-row:last-child .data-cell:last-child {
+                border-bottom: none;
+            }
+            .mic-card { padding: 1.5rem; }
+            .version-stamp { gap: 1.5rem; }
+            .footer { gap: 1.5rem; }
         }
 
-        .back-link:hover { color: #8a9a6e; }
-
-        @media (max-width: 768px) {
-            .header h1 { font-size: 2rem; }
-            .container { padding: 2rem 1.5rem; }
-            h2 { font-size: 1.5rem; }
-            h3 { font-size: 1.2rem; }
-        }
+        /* staggered entrance for sections */
+        .section:nth-child(1) { animation-delay: 0.05s; }
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.15s; }
+        .section:nth-child(4) { animation-delay: 0.2s; }
+        .section:nth-child(5) { animation-delay: 0.25s; }
+        .section:nth-child(6) { animation-delay: 0.3s; }
+        .section:nth-child(7) { animation-delay: 0.35s; }
+        .section:nth-child(8) { animation-delay: 0.4s; }
+        .section:nth-child(9) { animation-delay: 0.45s; }
+        .section:nth-child(10) { animation-delay: 0.5s; }
+        .section:nth-child(11) { animation-delay: 0.55s; }
+        .section:nth-child(12) { animation-delay: 0.6s; }
+        .section:nth-child(13) { animation-delay: 0.65s; }
+        .section:nth-child(14) { animation-delay: 0.7s; }
     </style>
 </head>
 <body>
+    <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+
     <div class="header">
-        <h1>Mise Privacy Policy</h1>
-        <p class="subtitle">Everything in its place — including your data</p>
-        <p class="last-updated">Last Updated: April 3, 2026</p>
+        <div class="header-inner">
+            <div class="header-badge">Inceptyon Labs</div>
+            <h1>Mise <em>Privacy&nbsp;Policy</em></h1>
+            <p class="subtitle">Everything in its place &mdash; including your data</p>
+            <p class="last-updated">Last Updated: April 5, 2026</p>
+        </div>
     </div>
 
     <div class="container">
-        <a href="/" class="back-link">&larr; Back to Inceptyon Labs</a>
+        <a href="/" class="back-link">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+            Inceptyon Labs
+        </a>
 
         <div class="tldr">
-            <h2>TL;DR</h2>
-            <p><strong>Your data is yours.</strong> Mise stores your grocery lists, recipes, and meal plans on your device and in your personal iCloud account. We never see, collect, or sell your data. The only network call is to fetch weekly store deals.</p>
+            <span class="tldr-label">The short version</span>
+            <p><strong>Your data is yours.</strong> Mise stores your grocery lists, recipes, and meal plans on your device and in your personal iCloud account. We never see, collect, or sell your data. The only network call is to fetch weekly store deals. If you use voice search, audio is processed on-device by Apple &mdash; we never hear a thing.</p>
         </div>
 
-        <h2>1. Introduction</h2>
-        <p>Inceptyon Labs LLC ("we", "us", "our") develops <strong>Mise</strong> (the "App"), a grocery list, recipe, and meal planning application for iOS and macOS. This Privacy Policy explains how we handle your information.</p>
-
-        <h2>2. Information We Do NOT Collect</h2>
-        <p>Mise does not collect, store on our servers, transmit to us, or share with third parties:</p>
-        <ul>
-            <li><strong>Personal information</strong> (beyond what Apple Sign In provides for authentication)</li>
-            <li><strong>Your shopping lists, recipes, or meal plans</strong></li>
-            <li><strong>Location data</strong> (GPS coordinates, precise location)</li>
-            <li><strong>Device identifiers</strong> for advertising or tracking</li>
-            <li><strong>Behavioral or advertising data</strong></li>
-            <li><strong>Analytics or usage telemetry</strong></li>
-        </ul>
-
-        <h2>3. Information Stored on Your Device &amp; iCloud</h2>
-        <p>All of your content is stored <strong>locally on your device</strong> and synced via <strong>your personal iCloud account</strong> (Apple CloudKit). This data never passes through our servers.</p>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Data Type</th>
-                    <th>Purpose</th>
-                    <th>Storage</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Shopping Lists &amp; Items</td>
-                    <td>Your grocery lists, items, prices, categories</td>
-                    <td>SwiftData + iCloud (CloudKit)</td>
-                </tr>
-                <tr>
-                    <td>Recipes</td>
-                    <td>Saved recipes, ingredients, steps, collections</td>
-                    <td>SwiftData + iCloud (CloudKit)</td>
-                </tr>
-                <tr>
-                    <td>Meal Plans</td>
-                    <td>Weekly meal schedule</td>
-                    <td>SwiftData + iCloud (CloudKit)</td>
-                </tr>
-                <tr>
-                    <td>Preferences</td>
-                    <td>Theme, text size, followed stores, zip code</td>
-                    <td>Local device storage</td>
-                </tr>
-                <tr>
-                    <td>Authentication</td>
-                    <td>Apple ID credential for Sign In with Apple</td>
-                    <td>iOS Keychain (encrypted)</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p>iCloud sync is managed entirely by Apple. We do not operate servers that store or relay your data. See <a href="https://support.apple.com/en-us/102651" target="_blank" rel="noopener">Apple's iCloud security overview</a> for details.</p>
-
-        <h2>4. Household Sharing</h2>
-        <p>Mise allows you to share lists, recipes, and meal plans with household members via <strong>Apple CloudKit Sharing</strong>. When you share:</p>
-        <ul>
-            <li>Shared data is stored in a shared CloudKit zone accessible only to invited members</li>
-            <li>Sharing is managed by Apple's infrastructure, not ours</li>
-            <li>You control who has access and can revoke sharing at any time</li>
-        </ul>
-
-        <h2>5. Third-Party Services</h2>
-
-        <h3>5.1 Weekly Store Deals (Flipp)</h3>
-        <p>Mise fetches weekly store deals using the Flipp API. When you use this feature:</p>
-        <ul>
-            <li><strong>Data sent:</strong> Your zip/postal code (to find nearby stores)</li>
-            <li><strong>Data received:</strong> Store names, deal descriptions, prices, and images</li>
-            <li><strong>No personal identifiers</strong> are sent with these requests</li>
-        </ul>
-        <p>You can choose not to use the deals feature. If you never enter a zip code, no data is sent to Flipp.</p>
-
-        <h3>5.2 Sign In with Apple</h3>
-        <p>Authentication is handled entirely by Apple. We receive only your name (if you choose to share it) and a relay email address. We do not store or transmit this beyond your local device.</p>
-
-        <div class="info-box">
-            <p><strong>No other third-party services.</strong> Mise has no advertising, no analytics SDKs, no crash reporting services, and no social media integrations.</p>
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">1</span>
+                <h2>Introduction</h2>
+            </div>
+            <p>Inceptyon Labs LLC (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) develops <strong>Mise</strong> (the &ldquo;App&rdquo;), a grocery list, recipe, and meal planning application for iOS and macOS. This Privacy Policy explains how we handle your information.</p>
         </div>
 
-        <h2>6. Data We Access</h2>
-        <p>Mise does not access your photos, contacts, camera, microphone, or any other device data beyond what is described above.</p>
+        <hr class="section-divider">
 
-        <h2>7. Data Retention &amp; Deletion</h2>
-        <ul>
-            <li><strong>Local data:</strong> Persists until you delete it within the app or uninstall the app</li>
-            <li><strong>iCloud data:</strong> Managed by your Apple ID settings. You can delete Mise data from iCloud via Settings &rarr; Apple ID &rarr; iCloud &rarr; Manage Storage</li>
-            <li><strong>We retain nothing:</strong> Since we don't collect your data, there is nothing for us to retain or delete</li>
-        </ul>
-
-        <h2>8. Children's Privacy</h2>
-        <p>Mise does not knowingly collect personal information from children under 13. The app does not contain advertising, social features, or user-generated public content.</p>
-
-        <h2>9. Your Privacy Rights</h2>
-        <p>Since Mise stores all data locally and in your personal iCloud account, you have full control:</p>
-        <ul>
-            <li><strong>Access:</strong> All your data is visible within the app at all times</li>
-            <li><strong>Deletion:</strong> Delete any item within the app, or uninstall to remove all local data</li>
-            <li><strong>Portability:</strong> Your data lives in your iCloud account</li>
-        </ul>
-        <p>For EU/EEA users (GDPR) and California users (CCPA): since we do not collect or process your personal data on our servers, these regulations' data-subject rights are satisfied by default.</p>
-
-        <h2>10. App Privacy Label</h2>
-        <p>On the App Store, Mise's privacy label reflects:</p>
-        <div class="highlight-box">
-            <p><strong>Data Not Linked to You:</strong> Zip/postal code (used for store deals, not linked to your identity)</p>
-            <p style="margin-top: 0.5rem;"><strong>Data Not Collected:</strong> All other categories</p>
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">2</span>
+                <h2>Information We Do NOT Collect</h2>
+            </div>
+            <p>Mise does not collect, store on our servers, transmit to us, or share with third parties:</p>
+            <ul>
+                <li><strong>Personal information</strong> (beyond what Apple Sign In provides for authentication)</li>
+                <li><strong>Your shopping lists, recipes, or meal plans</strong></li>
+                <li><strong>Location data</strong> (GPS coordinates, precise location)</li>
+                <li><strong>Device identifiers</strong> for advertising or tracking</li>
+                <li><strong>Behavioral or advertising data</strong></li>
+                <li><strong>Analytics or usage telemetry</strong></li>
+            </ul>
         </div>
 
-        <h2>11. Changes to This Policy</h2>
-        <p>We may update this Privacy Policy as the app evolves. Changes will be posted at this URL. Material changes will be noted in the App Store release notes.</p>
+        <hr class="section-divider">
 
-        <h2>12. Contact Us</h2>
-        <ul>
-            <li><strong>Privacy:</strong> <a href="mailto:privacy@inceptyon.io">privacy@inceptyon.io</a></li>
-            <li><strong>Support:</strong> <a href="mailto:support@inceptyon.io">support@inceptyon.io</a></li>
-            <li><strong>Website:</strong> <a href="https://inceptyon.io">inceptyon.io</a></li>
-        </ul>
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">3</span>
+                <h2>Information Stored on Your Device &amp; iCloud</h2>
+            </div>
+            <p>All of your content is stored <strong>locally on your device</strong> and synced via <strong>your personal iCloud account</strong> (Apple CloudKit). This data never passes through our servers.</p>
 
-        <h2>13. Legal</h2>
-        <p>This Privacy Policy is governed by the laws of Florida, United States.</p>
+            <div class="data-grid">
+                <div class="data-row data-header">
+                    <div class="data-cell">Data Type</div>
+                    <div class="data-cell">Purpose</div>
+                    <div class="data-cell">Storage</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-cell">Shopping Lists &amp; Items</div>
+                    <div class="data-cell">Your grocery lists, items, prices, categories</div>
+                    <div class="data-cell">SwiftData + iCloud</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-cell">Recipes</div>
+                    <div class="data-cell">Saved recipes, ingredients, steps, collections</div>
+                    <div class="data-cell">SwiftData + iCloud</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-cell">Meal Plans</div>
+                    <div class="data-cell">Weekly meal schedule</div>
+                    <div class="data-cell">SwiftData + iCloud</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-cell">Preferences</div>
+                    <div class="data-cell">Theme, text size, followed stores, zip code</div>
+                    <div class="data-cell">Local device</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-cell">Authentication</div>
+                    <div class="data-cell">Apple ID credential for Sign In with Apple</div>
+                    <div class="data-cell">iOS Keychain</div>
+                </div>
+            </div>
 
-        <div class="highlight-box">
-            <p><strong>Effective Date:</strong> April 3, 2026<br>
-            <strong>Version:</strong> 1.0.0</p>
+            <p>iCloud sync is managed entirely by Apple. We do not operate servers that store or relay your data. See <a href="https://support.apple.com/en-us/102651" target="_blank" rel="noopener">Apple&rsquo;s iCloud security overview</a> for details.</p>
         </div>
 
-        <hr style="margin: 3rem 0; border: none; border-top: 1px solid #e0d8cf;">
+        <hr class="section-divider">
 
-        <p style="text-align: center; font-size: 0.9rem; color: #8a7e72;">
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">4</span>
+                <h2>Household Sharing</h2>
+            </div>
+            <p>Mise allows you to share lists, recipes, and meal plans with household members via <strong>Apple CloudKit Sharing</strong>. When you share:</p>
+            <ul>
+                <li>Shared data is stored in a shared CloudKit zone accessible only to invited members</li>
+                <li>Sharing is managed by Apple&rsquo;s infrastructure, not ours</li>
+                <li>You control who has access and can revoke sharing at any time</li>
+            </ul>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">5</span>
+                <h2>Third-Party Services</h2>
+            </div>
+
+            <h3>5.1 Weekly Store Deals (Flipp)</h3>
+            <p>Mise fetches weekly store deals using the Flipp API. When you use this feature:</p>
+            <ul>
+                <li><strong>Data sent:</strong> Your zip/postal code (to find nearby stores)</li>
+                <li><strong>Data received:</strong> Store names, deal descriptions, prices, and images</li>
+                <li><strong>No personal identifiers</strong> are sent with these requests</li>
+            </ul>
+            <p>You can choose not to use the deals feature. If you never enter a zip code, no data is sent to Flipp.</p>
+
+            <h3>5.2 Sign In with Apple</h3>
+            <p>Authentication is handled entirely by Apple. We receive only your name (if you choose to share it) and a relay email address. We do not store or transmit this beyond your local device.</p>
+
+            <div class="callout callout-sage">
+                <span class="callout-label">Worth noting</span>
+                <p><strong>No other third-party services.</strong> Mise has no advertising, no analytics SDKs, no crash reporting services, and no social media integrations.</p>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">6</span>
+                <h2>Microphone &amp; Speech Recognition</h2>
+            </div>
+            <p>Mise can optionally use your device&rsquo;s microphone and Apple&rsquo;s on-device Speech Recognition framework to let you search for recipes by speaking ingredients aloud.</p>
+
+            <div class="mic-card">
+                <div class="mic-features">
+                    <div class="mic-feature">
+                        <div class="mic-icon on-device">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="1" width="8" height="11" rx="4"/><path d="M2 7a6 6 0 0012 0"/><path d="M8 14v1"/></svg>
+                        </div>
+                        <div>
+                            <h4>Entirely on-device</h4>
+                            <p>Audio is processed locally by Apple&rsquo;s Speech framework. No audio data is sent to Mise&rsquo;s servers or any third party.</p>
+                        </div>
+                    </div>
+                    <div class="mic-feature">
+                        <div class="mic-icon no-record">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M4.5 4.5l7 7"/></svg>
+                        </div>
+                        <div>
+                            <h4>Nothing is stored or recorded</h4>
+                            <p>Mise does not save, record, or retain any audio.</p>
+                        </div>
+                    </div>
+                    <div class="mic-feature">
+                        <div class="mic-icon optional">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1v8M4.5 4l7 8M11.5 4l-7 8"/><circle cx="8" cy="13" r="1.5"/></svg>
+                        </div>
+                        <div>
+                            <h4>Always optional</h4>
+                            <p>This feature requires your explicit permission via the iOS microphone prompt. You can revoke access at any time in Settings &rarr; Privacy &amp; Security &rarr; Microphone.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">7</span>
+                <h2>Other Device Data</h2>
+            </div>
+            <p>Mise does not access your photos, contacts, camera, or any other device data beyond what is described above.</p>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">8</span>
+                <h2>Data Retention &amp; Deletion</h2>
+            </div>
+            <ul>
+                <li><strong>Local data:</strong> Persists until you delete it within the app or uninstall the app</li>
+                <li><strong>iCloud data:</strong> Managed by your Apple ID settings. You can delete Mise data from iCloud via Settings &rarr; Apple ID &rarr; iCloud &rarr; Manage Storage</li>
+                <li><strong>We retain nothing:</strong> Since we don&rsquo;t collect your data, there is nothing for us to retain or delete</li>
+            </ul>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">9</span>
+                <h2>Children&rsquo;s Privacy</h2>
+            </div>
+            <p>Mise does not knowingly collect personal information from children under 13. The app does not contain advertising, social features, or user-generated public content.</p>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">10</span>
+                <h2>Your Privacy Rights</h2>
+            </div>
+            <p>Since Mise stores all data locally and in your personal iCloud account, you have full control:</p>
+            <ul>
+                <li><strong>Access:</strong> All your data is visible within the app at all times</li>
+                <li><strong>Deletion:</strong> Delete any item within the app, or uninstall to remove all local data</li>
+                <li><strong>Portability:</strong> Your data lives in your iCloud account</li>
+            </ul>
+            <p>For EU/EEA users (GDPR) and California users (CCPA): since we do not collect or process your personal data on our servers, these regulations&rsquo; data-subject rights are satisfied by default.</p>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">11</span>
+                <h2>App Privacy Label</h2>
+            </div>
+            <p>On the App Store, Mise&rsquo;s privacy label reflects:</p>
+            <div class="callout callout-amber">
+                <p><strong>Data Not Linked to You:</strong> Zip/postal code (used for store deals, not linked to your identity)</p>
+                <p><strong>Data Not Collected:</strong> All other categories</p>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">12</span>
+                <h2>Changes to This Policy</h2>
+            </div>
+            <p>We may update this Privacy Policy as the app evolves. Changes will be posted at this URL. Material changes will be noted in the App Store release notes.</p>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">13</span>
+                <h2>Contact Us</h2>
+            </div>
+            <ul>
+                <li><strong>Privacy:</strong> <a href="mailto:privacy@inceptyon.io">privacy@inceptyon.io</a></li>
+                <li><strong>Support:</strong> <a href="mailto:support@inceptyon.io">support@inceptyon.io</a></li>
+                <li><strong>Website:</strong> <a href="https://inceptyon.io">inceptyon.io</a></li>
+            </ul>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="section">
+            <div class="section-head">
+                <span class="section-num">14</span>
+                <h2>Legal</h2>
+            </div>
+            <p>This Privacy Policy is governed by the laws of Florida, United States.</p>
+        </div>
+
+        <dl class="version-stamp">
+            <div>
+                <dt>Effective</dt>
+                <dd>April 5, 2026</dd>
+            </div>
+            <div>
+                <dt>Version</dt>
+                <dd>1.1.0</dd>
+            </div>
+        </dl>
+
+        <div class="colophon">
             &copy; 2026 Inceptyon Labs LLC. All Rights Reserved.<br>
             Mise is a product of Inceptyon Labs LLC.
-        </p>
+        </div>
     </div>
 
     <div class="footer">
@@ -338,5 +858,13 @@
         <a href="/mise/support.html">Support</a>
         <a href="/mise/privacy.html">Privacy</a>
     </div>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+            document.getElementById('progressBar').style.width = pct + '%';
+        }, { passive: true });
+    </script>
 </body>
 </html>

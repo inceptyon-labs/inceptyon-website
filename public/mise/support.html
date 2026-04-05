@@ -10,278 +10,750 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            line-height: 1.7;
-            color: #3a3028;
-            background: #faf8f5;
+        :root {
+            --parchment: #f7f3ed;
+            --parchment-deep: #efe9df;
+            --ink: #2c2418;
+            --ink-soft: #5c4f3e;
+            --ink-muted: #8a7d6d;
+            --terracotta: #b8593b;
+            --terracotta-deep: #943f26;
+            --terracotta-glow: #d4764e;
+            --sage: #7a8c5e;
+            --sage-soft: #a8b88e;
+            --sage-bg: #edf1e6;
+            --amber: #c4943a;
+            --amber-bg: #fdf5e6;
+            --rule: #ddd4c6;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Newsreader', Georgia, serif;
+            font-optical-sizing: auto;
+            line-height: 1.78;
+            color: var(--ink-soft);
+            background: var(--parchment);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- progress bar --- */
+        .progress-track {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            z-index: 100;
+            background: transparent;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--terracotta), var(--amber));
+            transition: width 60ms linear;
+        }
+
+        /* --- grain overlay --- */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.018;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 256px 256px;
+        }
+
+        /* --- header --- */
         .header {
-            background: linear-gradient(135deg, #c4704b 0%, #a85a3a 100%);
-            color: white;
-            padding: 3rem 2rem;
+            position: relative;
+            background: var(--ink);
+            color: var(--parchment);
+            padding: 5rem 2rem 4rem;
             text-align: center;
-            border-bottom: 4px solid #8a9a6e;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 20% 80%, rgba(184,89,59,0.25), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(122,140,94,0.15), transparent);
+            pointer-events: none;
+        }
+
+        .header-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--sage-soft);
+            margin-bottom: 1.5rem;
+        }
+
+        .header-badge::before,
+        .header-badge::after {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--sage-soft);
+            opacity: 0.5;
         }
 
         .header h1 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 2.5rem;
+            font-family: 'Fraunces', serif;
+            font-optical-sizing: auto;
+            font-size: clamp(2.4rem, 5vw, 3.4rem);
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+        }
+
+        .header h1 em {
+            font-style: italic;
             font-weight: 400;
-            margin-bottom: 0.5rem;
+            color: var(--terracotta-glow);
         }
 
         .header .subtitle {
-            font-size: 1.1rem;
-            color: #f5e6d8;
-            margin-top: 0.5rem;
+            font-family: 'Newsreader', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--ink-muted);
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
+        /* --- nav back --- */
         .back-link {
-            display: inline-block;
-            margin-bottom: 2rem;
-            color: #c4704b;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 2.5rem;
+            color: var(--terracotta);
             text-decoration: none;
-            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--sage); }
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+        }
+        .back-link:hover svg { transform: translateX(-3px); }
+
+        /* --- main container --- */
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 3.5rem 2rem 4rem;
         }
 
-        .back-link:hover { color: #8a9a6e; }
-
-        .contact-box {
-            background: linear-gradient(135deg, #8a9a6e 0%, #6e7d56 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 3rem;
+        /* --- contact card --- */
+        .contact-card {
+            position: relative;
+            background: var(--ink);
+            color: var(--parchment);
+            padding: 2.5rem 2.5rem;
+            margin-bottom: 4rem;
+            border-radius: 2px;
             text-align: center;
+            overflow: hidden;
         }
 
-        .contact-box h2 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            font-weight: 400;
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--sage), var(--amber), var(--terracotta));
         }
 
-        .contact-box p { font-size: 1.1rem; margin-bottom: 1rem; }
-
-        .contact-box a {
-            color: white;
-            font-weight: 600;
-            text-decoration: underline;
-            font-size: 1.2rem;
+        .contact-card-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--sage-soft);
+            margin-bottom: 1.25rem;
         }
 
-        .contact-box a:hover { color: #f5e6d8; }
-
-        .faq-category { margin-bottom: 2.5rem; }
-
-        .faq-category h2 {
-            font-family: 'DM Serif Display', serif;
-            color: #3a3028;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #c4704b;
-            font-weight: 400;
-        }
-
-        .faq-item {
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
-            background: #fff;
-            border-radius: 8px;
-            border-left: 4px solid #c4704b;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-        }
-
-        .faq-item h3 {
-            font-family: 'DM Serif Display', serif;
-            color: #3a3028;
-            font-size: 1.2rem;
+        .contact-card h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.75rem;
+            font-weight: 300;
             margin-bottom: 0.75rem;
-            font-weight: 400;
+            color: var(--parchment);
         }
 
-        .faq-item p, .faq-item li {
-            color: #5a4e42;
+        .contact-card p {
+            font-size: 1.05rem;
+            color: rgba(247,243,237,0.7);
+            margin-bottom: 1.25rem;
+        }
+
+        .contact-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 1rem;
-            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
+            color: var(--terracotta-glow);
+            text-decoration: none;
+            padding: 0.65rem 1.5rem;
+            border: 1px solid rgba(212,118,78,0.3);
+            border-radius: 2px;
+            transition: all 0.2s;
         }
 
-        .faq-item ul, .faq-item ol { margin-left: 1.5rem; margin-top: 0.5rem; }
-
-        a { color: #c4704b; }
-        a:hover { color: #8a9a6e; }
-
-        .system-requirements {
-            background: #fff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        .contact-email:hover {
+            background: rgba(212,118,78,0.1);
+            border-color: var(--terracotta-glow);
+            color: var(--terracotta-glow);
         }
 
-        .system-requirements h3 {
-            font-family: 'DM Serif Display', serif;
-            color: #3a3028;
-            margin-bottom: 1rem;
+        .contact-email svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .contact-response {
+            margin-top: 1.25rem;
+            font-size: 0.88rem;
+            color: var(--ink-muted);
+            font-style: italic;
+        }
+
+        /* --- faq categories --- */
+        .faq-category {
+            margin-bottom: 3.5rem;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .faq-category:nth-child(1) { animation-delay: 0.05s; }
+        .faq-category:nth-child(2) { animation-delay: 0.15s; }
+        .faq-category:nth-child(3) { animation-delay: 0.25s; }
+        .faq-category:nth-child(4) { animation-delay: 0.35s; }
+        .faq-category:nth-child(5) { animation-delay: 0.45s; }
+
+        .category-head {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .category-icon {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .category-icon.start { background: var(--terracotta); }
+        .category-icon.sync { background: var(--sage); }
+        .category-icon.deals { background: var(--amber); }
+        .category-icon.fix { background: var(--ink); }
+
+        .category-icon svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .category-head h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.55rem;
             font-weight: 400;
+            color: var(--ink);
+            line-height: 1.25;
+            letter-spacing: -0.01em;
         }
 
-        .system-requirements ul { margin-left: 1.5rem; }
-        .system-requirements li { color: #5a4e42; margin-bottom: 0.5rem; }
+        /* --- faq items --- */
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--rule);
+            border-radius: 2px;
+            background: white;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--terracotta);
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            list-style: none;
+            transition: background 0.15s;
+        }
+
+        .faq-question:hover {
+            background: var(--parchment-deep);
+        }
+
+        .faq-question::-webkit-details-marker { display: none; }
+
+        .faq-question h3 {
+            font-family: 'Fraunces', serif;
+            color: var(--ink);
+            font-size: 1.08rem;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .faq-chevron {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            color: var(--ink-muted);
+            transition: transform 0.25s ease;
+        }
+
+        details[open] .faq-chevron {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            border-top: 1px solid var(--rule);
+            animation: slideDown 0.25s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .faq-answer p,
+        .faq-answer li {
+            font-size: 1rem;
+            color: var(--ink-soft);
+            margin-bottom: 0.75rem;
+        }
+
+        .faq-answer p:first-child { margin-top: 1.25rem; }
+        .faq-answer p:last-child { margin-bottom: 0; }
+
+        .faq-answer ul,
+        .faq-answer ol {
+            margin-left: 1.25rem;
+            margin-bottom: 1rem;
+            list-style: none;
+        }
+
+        .faq-answer ol {
+            counter-reset: steps;
+        }
+
+        .faq-answer ul li,
+        .faq-answer ol li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.5rem;
+            position: relative;
+        }
+
+        .faq-answer ul li::before {
+            content: '';
+            position: absolute;
+            left: -1rem;
+            top: 0.65rem;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--terracotta);
+            opacity: 0.5;
+        }
+
+        .faq-answer ol li {
+            counter-increment: steps;
+            padding-left: 0.75rem;
+        }
+
+        .faq-answer ol li::before {
+            content: counter(steps);
+            position: absolute;
+            left: -1.25rem;
+            top: 0;
+            font-family: 'Fraunces', serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--terracotta);
+            opacity: 0.7;
+        }
+
+        /* --- general typography --- */
+        p { margin-bottom: 1rem; font-size: 1.02rem; }
+
+        strong { color: var(--ink); font-weight: 500; }
+
+        a {
+            color: var(--terracotta);
+            text-decoration-color: rgba(184,89,59,0.3);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s;
+        }
+        a:hover { text-decoration-color: var(--terracotta); }
+
+        /* --- system requirements --- */
+        .sys-req {
+            position: relative;
+            background: white;
+            border: 1px solid var(--rule);
+            border-radius: 2px;
+            padding: 2rem 2.25rem;
+            margin-top: 1rem;
+        }
+
+        .sys-req::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 1.5rem;
+            right: 1.5rem;
+            height: 3px;
+            background: linear-gradient(90deg, var(--sage), transparent);
+            border-radius: 0 0 2px 2px;
+        }
+
+        .sys-req-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 1.25rem;
+            display: block;
+        }
+
+        .sys-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .sys-item dt {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .sys-item dd {
+            font-family: 'Fraunces', serif;
+            font-size: 1.05rem;
+            color: var(--ink);
+        }
+
+        /* --- colophon & footer --- */
+        .colophon {
+            text-align: center;
+            padding: 3rem 2rem 2.5rem;
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            line-height: 1.7;
+            border-top: 1px solid var(--rule);
+            margin-top: 1rem;
+        }
 
         .footer {
-            background: #f0ebe4;
-            padding: 2rem;
+            background: var(--ink);
+            padding: 1.75rem 2rem;
             text-align: center;
-            margin-top: 3rem;
-            border-top: 1px solid #e0d8cf;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
         }
 
         .footer a {
-            color: #3a3028;
+            color: var(--ink-muted);
             text-decoration: none;
-            font-weight: 500;
-            margin: 0 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.2s;
         }
 
-        .footer a:hover { color: #c4704b; text-decoration: underline; }
+        .footer a:hover { color: var(--parchment); }
 
-        @media (max-width: 768px) {
-            .header h1 { font-size: 2rem; }
-            .container { padding: 2rem 1.5rem; }
-            .faq-category h2 { font-size: 1.5rem; }
+        /* --- responsive --- */
+        @media (max-width: 640px) {
+            .header { padding: 3.5rem 1.5rem 3rem; }
+            .container { padding: 2.5rem 1.5rem 3rem; }
+            .contact-card { padding: 2rem 1.5rem; }
+            .category-head h2 { font-size: 1.3rem; }
+            .faq-question { padding: 1rem 1.25rem; }
+            .faq-answer { padding: 0 1.25rem 1.25rem; }
+            .sys-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .sys-req { padding: 1.5rem; }
+            .footer { gap: 1.5rem; }
         }
     </style>
 </head>
 <body>
+    <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+
     <div class="header">
-        <h1>Mise Support</h1>
-        <p class="subtitle">We're here to help</p>
+        <div class="header-inner">
+            <div class="header-badge">Inceptyon Labs</div>
+            <h1>Mise <em>Support</em></h1>
+            <p class="subtitle">We&rsquo;re here to help</p>
+        </div>
     </div>
 
     <div class="container">
-        <a href="/" class="back-link">&larr; Back to Inceptyon Labs</a>
+        <a href="/" class="back-link">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+            Inceptyon Labs
+        </a>
 
-        <div class="contact-box">
+        <div class="contact-card">
+            <span class="contact-card-label">Get in touch</span>
             <h2>Need Help?</h2>
-            <p>Email us for support, bug reports, or feature requests:</p>
-            <a href="mailto:support@inceptyon.io">support@inceptyon.io</a>
-            <p style="margin-top: 1rem; font-size: 0.95rem;">We typically respond within 24-48 hours.</p>
+            <p>Email us for support, bug reports, or feature requests.</p>
+            <a href="mailto:support@inceptyon.io" class="contact-email">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M1 3l7 5 7-5"/></svg>
+                support@inceptyon.io
+            </a>
+            <p class="contact-response">We typically respond within 24&ndash;48 hours.</p>
         </div>
 
-        <div class="faq-category">
-            <h2>Getting Started</h2>
-
-            <div class="faq-item">
-                <h3>How do I create a shopping list?</h3>
-                <p>Tap the <strong>Lists</strong> tab, then tap the <strong>+</strong> button. Give your list a name, pick an icon and color, and optionally set a budget. Tap Save to create it.</p>
+        <div class="faq-category" style="animation-delay: 0.05s;">
+            <div class="category-head">
+                <div class="category-icon start">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
+                </div>
+                <h2>Getting Started</h2>
             </div>
 
-            <div class="faq-item">
-                <h3>How do I add items to a list?</h3>
-                <p>Open a list and type in the text field at the top. Mise will suggest items you've added before. You can set a quantity, category, and price for each item.</p>
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <h3>How do I create a shopping list?</h3>
+                    <svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="faq-answer">
+                    <p>Tap the <strong>Lists</strong> tab, then tap the <strong>+</strong> button. Give your list a name, pick an icon and color, and optionally set a budget. Tap Save to create it.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <h3>How do I add items to a list?</h3>
+                    <svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="faq-answer">
+                    <p>Open a list and type in the text field at the top. Mise will suggest items you&rsquo;ve added before. You can set a quantity, category, and price for each item.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <h3>How do I import a recipe from a website?</h3>
+                    <svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="faq-answer">
+                    <p>Two ways:</p>
+                    <ul>
+                        <li><strong>In the app:</strong> Go to Recipes, tap +, choose &ldquo;Import from URL&rdquo;, and paste the link</li>
+                        <li><strong>From Safari:</strong> Use the Share button and select Mise from the share sheet</li>
+                    </ul>
+                    <p>Mise supports most recipe websites including AllRecipes, NYT Cooking, Serious Eats, and more.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <h3>How does meal planning work?</h3>
+                    <svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="faq-answer">
+                    <p>Go to the <strong>Meal Plan</strong> tab to see your weekly calendar. Tap any day to add a meal. You can link a recipe or just type a meal name. Plan breakfast, lunch, dinner, or snacks for each day.</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-category" style="animation-delay: 0.15s;">
+            <div class="category-head">
+                <div class="category-icon sync">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8a6 6 0 0110.5-4M14 8a6 6 0 01-10.5 4"/><path d="M12.5 1v3h-3"/><path d="M3.5 15v-3h3"/></svg>
+                </div>
+                <h2>Sharing &amp; Sync</h2>
             </div>
 
-            <div class="faq-item">
-                <h3>How do I import a recipe from a website?</h3>
-                <p>Two ways:</p>
-                <ul>
-                    <li><strong>In the app:</strong> Go to Recipes, tap +, choose "Import from URL", and paste the link</li>
-                    <li><strong>From Safari:</strong> Use the Share button and select Mise from the share sheet</li>
-                </ul>
-                <p>Mise supports most recipe websites including AllRecipes, NYT Cooking, Serious Eats, and more.</p>
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <h3>How do I share lists with my family?</h3>
+                    <svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="faq-answer">
+                    <p>Go to <strong>Settings</strong> and set up your <strong>Household</strong>. Once created, share the invite link with family members. After they join, toggle sharing on for any list, recipe, or meal plan.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <h3>Do I need an internet connection?</h3>
+                    <svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="faq-answer">
+                    <p>Mise works offline for all core features. Internet is needed for iCloud sync, household sharing, recipe imports from URLs, and weekly store deals.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <h3>Is my data backed up?</h3>
+                    <svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="faq-answer">
+                    <p>Yes. If you&rsquo;re signed into iCloud, your data syncs automatically across all your Apple devices. Your data is stored in your personal iCloud account &mdash; we never have access to it.</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-category" style="animation-delay: 0.25s;">
+            <div class="category-head">
+                <div class="category-icon deals">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8l6-6h4l4 4v4l-6 6z"/><circle cx="9.5" cy="5.5" r="1" fill="currentColor"/></svg>
+                </div>
+                <h2>Weekly Deals</h2>
             </div>
 
-            <div class="faq-item">
-                <h3>How does meal planning work?</h3>
-                <p>Go to the <strong>Meal Plan</strong> tab to see your weekly calendar. Tap any day to add a meal. You can link a recipe or just type a meal name. Plan breakfast, lunch, dinner, or snacks for each day.</p>
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <h3>How do I see deals for my local stores?</h3>
+                    <svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="faq-answer">
+                    <p>Go to the <strong>Deals</strong> tab and enter your zip code. Mise will show weekly deals from stores near you. You can follow specific stores to filter the deals you see.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <h3>Can I add a deal to my shopping list?</h3>
+                    <svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="faq-answer">
+                    <p>Yes! Tap any deal and choose which shopping list to add it to. The item name and store info will be added automatically.</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-category" style="animation-delay: 0.35s;">
+            <div class="category-head">
+                <div class="category-icon fix">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2A2.5 2.5 0 008 4.5V6H3.5A1.5 1.5 0 002 7.5v6A1.5 1.5 0 003.5 15h9a1.5 1.5 0 001.5-1.5v-6A1.5 1.5 0 0012.5 6H8V4.5A2.5 2.5 0 0110.5 2"/></svg>
+                </div>
+                <h2>Troubleshooting</h2>
+            </div>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <h3>My data isn&rsquo;t syncing between devices</h3>
+                    <svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="faq-answer">
+                    <p>Check the following:</p>
+                    <ol>
+                        <li>Both devices are signed into the same Apple ID</li>
+                        <li>iCloud is enabled for Mise (Settings &rarr; Apple ID &rarr; iCloud &rarr; Mise)</li>
+                        <li>Both devices have an internet connection</li>
+                        <li>Try pulling down to refresh in any list</li>
+                    </ol>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <h3>A recipe didn&rsquo;t import correctly</h3>
+                    <svg class="faq-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="faq-answer">
+                    <p>Not all recipe websites format their content the same way. If an import is incomplete, you can edit the recipe manually. If you&rsquo;d like us to improve support for a specific site, email us the URL at <a href="mailto:support@inceptyon.io">support@inceptyon.io</a>.</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-category" style="animation-delay: 0.45s;">
+            <div class="sys-req">
+                <span class="sys-req-label">System Requirements</span>
+                <div class="sys-grid">
+                    <dl class="sys-item">
+                        <dt>iOS</dt>
+                        <dd>17.0 or later</dd>
+                    </dl>
+                    <dl class="sys-item">
+                        <dt>macOS</dt>
+                        <dd>14.0 (Sonoma) or later</dd>
+                    </dl>
+                    <dl class="sys-item">
+                        <dt>iCloud</dt>
+                        <dd>Required for sync &amp; sharing</dd>
+                    </dl>
+                    <dl class="sys-item">
+                        <dt>Storage</dt>
+                        <dd>~30 MB</dd>
+                    </dl>
+                </div>
             </div>
         </div>
 
-        <div class="faq-category">
-            <h2>Sharing &amp; Sync</h2>
-
-            <div class="faq-item">
-                <h3>How do I share lists with my family?</h3>
-                <p>Go to <strong>Settings</strong> and set up your <strong>Household</strong>. Once created, share the invite link with family members. After they join, toggle sharing on for any list, recipe, or meal plan.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>Do I need an internet connection?</h3>
-                <p>Mise works offline for all core features. Internet is needed for iCloud sync, household sharing, recipe imports from URLs, and weekly store deals.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>Is my data backed up?</h3>
-                <p>Yes. If you're signed into iCloud, your data syncs automatically across all your Apple devices. Your data is stored in your personal iCloud account — we never have access to it.</p>
-            </div>
-        </div>
-
-        <div class="faq-category">
-            <h2>Weekly Deals</h2>
-
-            <div class="faq-item">
-                <h3>How do I see deals for my local stores?</h3>
-                <p>Go to the <strong>Deals</strong> tab and enter your zip code. Mise will show weekly deals from stores near you. You can follow specific stores to filter the deals you see.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>Can I add a deal to my shopping list?</h3>
-                <p>Yes! Tap any deal and choose which shopping list to add it to. The item name and store info will be added automatically.</p>
-            </div>
-        </div>
-
-        <div class="faq-category">
-            <h2>Troubleshooting</h2>
-
-            <div class="faq-item">
-                <h3>My data isn't syncing between devices</h3>
-                <p>Check the following:</p>
-                <ol>
-                    <li>Both devices are signed into the same Apple ID</li>
-                    <li>iCloud is enabled for Mise (Settings &rarr; Apple ID &rarr; iCloud &rarr; Mise)</li>
-                    <li>Both devices have an internet connection</li>
-                    <li>Try pulling down to refresh in any list</li>
-                </ol>
-            </div>
-
-            <div class="faq-item">
-                <h3>A recipe didn't import correctly</h3>
-                <p>Not all recipe websites format their content the same way. If an import is incomplete, you can edit the recipe manually. If you'd like us to improve support for a specific site, email us the URL at <a href="mailto:support@inceptyon.io">support@inceptyon.io</a>.</p>
-            </div>
-        </div>
-
-        <div class="system-requirements">
-            <h3>System Requirements</h3>
-            <ul>
-                <li><strong>iOS:</strong> 17.0 or later</li>
-                <li><strong>macOS:</strong> 14.0 (Sonoma) or later</li>
-                <li><strong>iCloud:</strong> Required for sync and sharing (optional for local-only use)</li>
-                <li><strong>Storage:</strong> ~30 MB</li>
-            </ul>
-        </div>
-
-        <hr style="margin: 3rem 0; border: none; border-top: 1px solid #e0d8cf;">
-
-        <p style="text-align: center; font-size: 0.9rem; color: #8a7e72;">
+        <div class="colophon">
             &copy; 2026 Inceptyon Labs LLC. All Rights Reserved.<br>
             Mise is a product of Inceptyon Labs LLC.
-        </p>
+        </div>
     </div>
 
     <div class="footer">
@@ -289,5 +761,13 @@
         <a href="/mise/privacy.html">Privacy</a>
         <a href="/mise/support.html">Support</a>
     </div>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+            document.getElementById('progressBar').style.width = pct + '%';
+        }, { passive: true });
+    </script>
 </body>
 </html>
