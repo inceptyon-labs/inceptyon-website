@@ -2,22 +2,270 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* ─────────────────────────────────────
+     RAW PALETTE — v0.3
+     ───────────────────────────────────── */
+  --ink: #0E1218;
+  --carbon: #181C24;
+  --graphite: #363B45;
+  --steel: #6A727E;
+  --slate: #A6ACB6;
+  --mist: #C0C4CB;
+  --halogen: #E8EAEC;
+  --bone: #EBE6D7;
+  --paper: #F7F4EA;
+
+  --filament: #E1925A;
+  --filament-hover: #C97D48;
+  --phosphor: #7BC07A;
+  --caution: #C03A35;
+
+  /* ─────────────────────────────────────
+     SEMANTIC TOKENS
+     ───────────────────────────────────── */
+  --surface-page: var(--ink);
+  --surface-panel: var(--carbon);
+  --surface-elevated: var(--carbon);
+
+  --text-display: var(--halogen);
+  --text-primary: var(--bone);
+  --text-secondary: var(--slate);
+  --text-tertiary: var(--steel);
+  --text-disabled: var(--graphite);
+  --text-on-filament: var(--ink);
+  --text-time-default: var(--slate);
+  --text-time-active: var(--filament);
+  --text-time-stale: var(--steel);
+
+  --border-subtle: var(--graphite);
+  --border-visible: #4D525C;
+  --border-strong: var(--mist);
+  --border-accent: var(--filament);
+  --border-frame-l1: var(--graphite);
+  --border-frame-l2: var(--graphite);
+  --border-frame-l3: var(--graphite);
+  --border-heavy: 3px;
+
+  --action-primary-border: var(--filament);
+  --action-primary-text: var(--filament);
+  --action-primary-fill-hover: var(--filament);
+  --action-primary-text-hover: var(--ink);
+  --action-secondary-border: var(--bone);
+  --action-secondary-text: var(--bone);
+  --action-destructive-border: var(--caution);
+  --action-destructive-text: var(--caution);
+
+  --status-active: var(--filament);
+  --status-deployed: var(--phosphor);
+  --status-in-dev: var(--steel);
+  --status-archived: var(--steel);
+  --status-decommissioned: var(--caution);
+
+  --focus-ring: var(--filament);
+  --focus-ring-offset: 2px;
+
+  --font-sans: "Geist", "Söhne", -apple-system, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Berkeley Mono", ui-monospace, monospace;
+  --font-display: "Geist", "Söhne Breit", "NB Architekt", sans-serif;
+  --weight-display: 900;
+  --weight-medium: 500;
+  --weight-regular: 400;
+
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;
+  --space-4: 16px;  --space-6: 24px;  --space-8: 32px;
+  --space-12: 48px; --space-16: 64px; --space-24: 96px;
+  --space-32: 128px;
+
+  --nest-l1-inset: 32px;
+  --nest-l2-inset: 24px;
+  --nest-l3-inset: 16px;
+
+  --ease-instrument: cubic-bezier(0.2, 0.0, 0.2, 1);
+  --duration-fast: 200ms;
+  --duration-base: 320ms;
+  --duration-slow: 480ms;
+  --duration-architectural: 600ms;
+  --duration-tick: 1000ms;
+  --duration-met-tick: 150ms;
+}
+
+[data-surface="light"],
+[data-theme="light"] {
+  --surface-page: var(--paper);
+  --surface-panel: var(--bone);
+  --surface-elevated: var(--paper);
+
+  --text-display: var(--ink);
+  --text-primary: var(--ink);
+  --text-secondary: var(--graphite);
+  --text-tertiary: var(--steel);
+  --text-disabled: var(--mist);
+  --text-on-filament: var(--ink);
+  --text-time-default: var(--graphite);
+  --text-time-stale: var(--steel);
+
+  --border-subtle: var(--mist);
+  --border-visible: #B8BCC4;
+  --border-strong: var(--graphite);
+
+  --action-secondary-border: var(--ink);
+  --action-secondary-text: var(--ink);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-navy-900 text-gray-100;
+    background-color: var(--surface-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button,
+  a {
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+    outline-color: var(--focus-ring);
+  }
+
+  img {
+    @apply max-w-full;
   }
 }
 
 @layer utilities {
-  .text-gradient {
-    @apply bg-gradient-to-r from-cyan-400 to-cyan-500 bg-clip-text text-transparent;
+  .mono-caps {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 400;
   }
 
-  .glow-cyan {
-    text-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
+  .mono-caps-wide {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+  }
+
+  .mono-telemetry {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    font-feature-settings: "ss01" on;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .btn-bracket::before { content: "[ "; }
+  .btn-bracket::after  { content: " ]"; }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: var(--weight-display);
+    text-wrap: balance;
+    hyphens: none;
+    letter-spacing: -0.025em;
+    color: var(--text-display);
+  }
+
+  .prose-body {
+    text-wrap: pretty;
+    hyphens: none;
+  }
+
+  .project-name { white-space: nowrap; }
+
+  .time-element {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .grid-coords {
+    background-image:
+      linear-gradient(to right, rgba(54, 59, 69, 0.35) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(54, 59, 69, 0.35) 1px, transparent 1px);
+    background-size: 96px 96px;
+  }
+
+  /* Filament CTA — bordered, hover-fill */
+  .btn-filament {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    border: 1px solid var(--action-primary-border);
+    color: var(--action-primary-text);
+    background: transparent;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    transition: background-color var(--duration-base) var(--ease-instrument),
+                color var(--duration-base) var(--ease-instrument);
+  }
+  .btn-filament:hover {
+    background-color: var(--action-primary-fill-hover);
+    color: var(--action-primary-text-hover);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    border: 1px solid var(--action-secondary-border);
+    color: var(--action-secondary-text);
+    background: transparent;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    transition: background-color var(--duration-base) var(--ease-instrument),
+                color var(--duration-base) var(--ease-instrument);
+  }
+  .btn-secondary:hover {
+    background-color: var(--action-secondary-border);
+    color: var(--surface-page);
+  }
+
+  /* Nested frame primitives — §2.10 */
+  .frame-l1 {
+    border: 1px solid var(--border-frame-l1);
+  }
+  .frame-l2 {
+    border: 1px solid var(--border-frame-l2);
+  }
+  .frame-l3 {
+    border: 1px solid var(--border-frame-l3);
+  }
+
+  /* Time elements — default muted, brighten on hover/focus */
+  .time-muted {
+    color: var(--text-time-default);
+    transition: color var(--duration-base) var(--ease-instrument);
+  }
+  .time-muted:hover,
+  .time-muted:focus-visible {
+    color: var(--text-time-active);
+  }
+  .time-stale {
+    color: var(--text-time-stale);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

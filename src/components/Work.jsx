@@ -1,145 +1,189 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { useNow } from '../hooks/useNow'
+import { met, metAgo, formatYMD } from '../lib/studio'
+import { PROJECTS, PROJECT_TOTAL } from '../lib/projects'
+import DossierDrawer from './DossierDrawer'
 
-const ProjectCard = ({ title, tagline, status, delay, image, fillCard, link }) => {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+const STATUS_STYLES = {
+  DEPLOYED: 'border-phosphor text-phosphor',
+  ACTIVE: 'border-filament text-filament',
+  'IN-DEVELOPMENT': 'border-steel text-bone',
+  CONCEPT: 'border-graphite text-steel',
+  ARCHIVED: 'border-graphite text-steel opacity-70',
+  DECOMMISSIONED: 'border-caution text-caution',
+}
 
-  const statusColors = {
-    'Coming Soon': 'bg-cyan-400/20 text-cyan-400 border-cyan-400/30',
-    'Available': 'bg-green-400/20 text-green-400 border-green-400/30',
-    'In Development': 'bg-yellow-400/20 text-yellow-400 border-yellow-400/30'
-  }
+const StatusBadge = ({ status, suffix }) => (
+  <span
+    className={`mono-caps inline-flex items-center border px-2.5 py-1 text-[10px] tracking-[0.1em] ${STATUS_STYLES[status] || STATUS_STYLES.CONCEPT}`}
+  >
+    {status}
+    {suffix && (
+      <>
+        <span className="mx-1.5 opacity-50">·</span>
+        <span className="time-element">{suffix}</span>
+      </>
+    )}
+  </span>
+)
 
-  const handleClick = () => {
-    if (link) {
-      window.open(link, '_blank', 'noopener,noreferrer')
-    }
-  }
+const DossierCard = ({ project, total, index, now, onInspect }) => {
+  const operational = project.established_on
+  const operationalMet = operational ? met(operational, now, 0).replace('.0D', 'D') : null
+  const lastDeploy = project.latest_release
+  const lastDeployAgo = lastDeploy ? metAgo(lastDeploy, now) : null
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.6, delay }}
-      whileHover={{ y: -10 }}
-      onClick={handleClick}
-      className="group bg-navy-800/50 rounded-xl overflow-hidden border border-cyan-400/10 hover:border-cyan-400/30 transition-all cursor-pointer"
+    <motion.article
+      initial={{ opacity: 0, y: 8 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.5, delay: 0.04 * index, ease: [0.2, 0, 0.2, 1] }}
+      className="group flex h-full flex-col border border-graphite bg-carbon transition-colors duration-instrument ease-instrument hover:border-filament"
     >
-      {/* Image Placeholder */}
-      <div className={`aspect-video bg-gradient-to-br from-cyan-400/10 to-navy-700 flex items-center justify-center group-hover:from-cyan-400/20 transition-all ${fillCard ? '' : 'p-8'}`}>
-        {image ? (
-          <img
-            src={image}
-            alt={title}
-            className={`w-full h-full ${fillCard ? 'object-cover' : 'object-contain'}`}
-          />
-        ) : (
-          <svg className="w-16 h-16 text-cyan-400/30 group-hover:text-cyan-400/50 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-        )}
+      {/* Header — two strips per §5.3 */}
+      <div className="mono-caps tabular border-b border-graphite px-6 py-3 text-[10px]">
+        <div className="flex items-center justify-between gap-3 text-slate">
+          <span>DOSSIER {project.code} / {String(total).padStart(2, '0')}</span>
+          <StatusBadge status={project.status} suffix={operationalMet} />
+        </div>
+        <p className="mt-1.5 truncate text-steel">DOMAIN: {project.domain}</p>
       </div>
 
-      {/* Content */}
-      <div className="p-6">
-        <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-semibold text-cyan-400 group-hover:text-cyan-300 transition-colors">
-            {title}
-          </h3>
-          <span className={`px-3 py-1 text-xs font-medium rounded-full border ${statusColors[status]}`}>
-            {status}
-          </span>
+      <div className="flex flex-1 flex-col p-5">
+        {/* Title row — small logo plate + project name */}
+        <div className="flex items-start gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-graphite bg-ink p-1.5">
+            <img
+              src={project.logo}
+              alt=""
+              className="max-h-full max-w-full object-contain"
+              loading="lazy"
+            />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="project-name text-xl font-medium leading-[1.1] tracking-display text-bone">
+              {project.title}
+            </h3>
+            {project.subtitle && (
+              <p className="mono-caps mt-1 text-[10px] text-slate">
+                {project.subtitle}
+              </p>
+            )}
+          </div>
         </div>
-        <p className="text-gray-200">{tagline}</p>
+
+        <p className="prose-body mt-4 text-[13px] leading-[1.5] text-slate">
+          {project.classification}
+        </p>
+        {project.signal && (
+          <p className="mt-1.5 text-[13px] leading-[1.5] text-bone">
+            “{project.signal}”
+          </p>
+        )}
+
+        <div className="mt-5 h-px bg-graphite" />
+
+        {/* Metadata */}
+        <dl className="mono-caps tabular mt-5 space-y-2.5 text-[10px]">
+          <div className="flex gap-5">
+            <dt className="w-20 shrink-0 text-steel">INSTANCES</dt>
+            <dd className="text-bone">{project.instances.join(' · ')}</dd>
+          </div>
+          <div className="flex gap-5">
+            <dt className="w-20 shrink-0 text-steel">STACK</dt>
+            <dd className="text-bone">{project.stack.join(' · ')}</dd>
+          </div>
+          {lastDeploy && (
+            <div className="flex gap-5">
+              <dt className="w-20 shrink-0 text-steel">LATEST</dt>
+              <dd className="text-bone time-element">
+                {formatYMD(lastDeploy)}
+                <span className="mx-1.5 text-graphite">/</span>
+                <span className="text-slate">{lastDeployAgo}</span>
+              </dd>
+            </div>
+          )}
+        </dl>
+
+        <div className="mt-auto flex flex-wrap items-center gap-2 pt-6">
+          {project.primary_link && (
+            <a
+              href={project.primary_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-filament btn-bracket text-[10px]"
+              aria-label={`${project.title} — open ${project.links[0]?.label?.toLowerCase() ?? 'link'}`}
+            >
+              {project.links[0]?.label ?? 'VISIT'} ↗
+            </a>
+          )}
+          <button
+            type="button"
+            onClick={() => onInspect(project)}
+            className="mono-caps btn-bracket text-[10px] text-slate transition-colors duration-instrument ease-instrument hover:text-bone"
+          >
+            INSPECT
+          </button>
+        </div>
       </div>
-    </motion.div>
+    </motion.article>
   )
 }
 
 const Work = () => {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const now = useNow(1000)
+  const [activeProject, setActiveProject] = useState(null)
 
-  const projects = [
-    {
-      title: 'INCEPTŸON',
-      tagline: 'Sci-fi educational simulation game exploring alien ecosystems',
-      status: 'Available',
-      image: '/INCEPTYON.png',
-      fillCard: true,
-      link: 'https://apps.apple.com/us/app/incept%C3%BFon/id6753733758'
-    },
-    {
-      title: 'Holocron',
-      tagline: 'Intelligent note and idea system for creative thinkers',
-      status: 'Coming Soon',
-      image: '/tesseract.png'
-    },
-    {
-      title: 'The Racket by Unwyned',
-      tagline: 'Your personal wine fixer. Welcome to the operation.',
-      status: 'Available',
-      image: '/unwyned-logo.png',
-      link: 'https://apps.apple.com/app/unwyned/id6755911748',
-      fillCard: false
-    },
-    {
-      title: 'Fireball Fantasy Fiasco',
-      tagline: 'Competitive golf league companion app',
-      status: 'Coming Soon',
-      image: '/gchl.png'
-    },
-    {
-      title: 'Alyqon',
-      tagline: 'Visual explorer for aliquot sums and iterative sequences',
-      status: 'Available',
-      image: '/alyqon-logo.png',
-      link: 'https://alyqon.inceptyon.io/'
-    },
-    {
-      title: 'Gugo',
-      tagline: 'Engagement and community platform',
-      status: 'Coming Soon',
-      image: '/gugo-duck.png'
-    }
-  ]
+  const total = PROJECT_TOTAL
 
   return (
-    <section id="work" className="py-32 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section
+      id="work"
+      className="relative px-6 py-24 md:px-12 md:py-32"
+    >
+      <div className="mx-auto max-w-[1400px]">
+        {/* Section header */}
         <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.5, ease: [0.2, 0, 0.2, 1] }}
+          className="mb-12 flex flex-col gap-4 border-b border-graphite pb-6 md:flex-row md:items-end md:justify-between"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
-            Our Work
-          </h2>
-          <p className="text-xl text-gray-200 max-w-2xl mx-auto">
-            Exploring the boundaries of imagination and technology
+          <div>
+            <p className="mono-caps tabular text-[11px] text-slate">
+              01 / 03 — DOSSIERS
+            </p>
+            <p className="mono-caps tabular mt-2 text-[11px] text-steel">
+              ACTIVE AND ARCHIVED PROJECTS
+            </p>
+          </div>
+          <p className="mono-caps tabular text-[11px] text-steel">
+            COUNT: {String(total).padStart(2, '0')} / {String(total).padStart(2, '0')}
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.title}
-              title={project.title}
-              tagline={project.tagline}
-              status={project.status}
-              image={project.image}
-              fillCard={project.fillCard}
-              link={project.link}
-              delay={0.1 * index}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {PROJECTS.map((project, index) => (
+            <DossierCard
+              key={project.slug}
+              project={project}
+              total={total}
+              index={index}
+              now={now}
+              onInspect={setActiveProject}
             />
           ))}
         </div>
       </div>
+
+      <DossierDrawer
+        project={activeProject}
+        open={!!activeProject}
+        onClose={() => setActiveProject(null)}
+      />
     </section>
   )
 }

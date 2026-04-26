@@ -7,27 +7,43 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: {
-          900: '#0A0F1F',
-          800: '#0F1629',
-          700: '#151D33',
+        ink: '#0E1218',
+        carbon: '#181C24',
+        graphite: '#363B45',
+        steel: '#6A727E',
+        slate: '#A6ACB6',
+        mist: '#C0C4CB',
+        halogen: '#E8EAEC',
+        bone: '#EBE6D7',
+        paper: '#F7F4EA',
+        filament: {
+          DEFAULT: '#E1925A',
+          hover: '#C97D48',
         },
-        cyan: {
-          400: '#64FFDA',
-          500: '#4FE3C1',
-        },
-        gray: {
-          100: '#E0E6F8',
-          200: '#C4CCDF',
-          300: '#A8B2C6',
-        }
+        phosphor: '#7BC07A',
+        caution: '#C03A35',
       },
       fontFamily: {
-        sans: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Geist', 'Söhne', '-apple-system', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', '"Berkeley Mono"', 'ui-monospace', 'monospace'],
+        display: ['Geist', '"Söhne Breit"', '"NB Architekt"', 'sans-serif'],
       },
-      backdropBlur: {
-        xs: '2px',
-      }
+      fontWeight: {
+        display: '900',
+      },
+      letterSpacing: {
+        mono: '0.08em',
+        'mono-wide': '0.1em',
+        display: '-0.025em',
+        'display-tight': '-0.02em',
+      },
+      transitionTimingFunction: {
+        instrument: 'cubic-bezier(0.2, 0.0, 0.2, 1)',
+      },
+      transitionDuration: {
+        instrument: '320ms',
+        architectural: '600ms',
+      },
     },
   },
   plugins: [],

@@ -5,12 +5,13 @@
 </p>
 
 <p align="center">
-  <strong>Designing the Future of Play, Productivity, and Discovery</strong>
+  <strong>Systems for impossible ideas.</strong>
 </p>
 
 <p align="center">
   <a href="https://inceptyon.io">Website</a> •
-  <a href="https://apps.apple.com/us/app/incept%C3%BFon/id6753733758">Download INCEPTYON</a> •
+  <a href="https://apps.apple.com/us/app/incept%C3%BFon/id6753733758">INCEPTYON</a> •
+  <a href="https://unwyned.com">Unwyned</a> •
   <a href="mailto:hello@inceptyon.io">Contact</a>
 </p>
 
@@ -18,71 +19,67 @@
 
 ## About
 
-Inceptyon Labs LLC is an independent creative technology studio based in Tampa, Florida. We explore the intersection of imagination, design, and intelligence—crafting games, apps, and AI-driven tools that connect people to ideas in new ways.
+Inceptyon Labs is an independent systems studio in Tampa, Florida. We build codenamed games, apps, agents, dashboards, and utilities that turn strange concepts into working machines.
 
-My son comes up with ideas, I build them. Sometimes it's a math tool, sometimes it's a clicker game. Inceptyon is our little workshop.
+The studio voice is precise, cinematic, and quietly technical: an archive of devices, signals, dossiers, protocols, and field systems. It should feel adjacent to serious speculative engineering without naming or directly referencing any outside film, franchise, or director.
 
-If you enjoy what we make, a coffee helps keep the lights on: **[ko-fi.com/inceptyon](https://ko-fi.com/inceptyon)**
+This repository contains the source code for the marketing website at [inceptyon.io](https://inceptyon.io).
 
-This repository contains the source code for our marketing website at [inceptyon.io](https://inceptyon.io).
+## Brand Direction
 
-## Featured Project: INCEPTYON
+**Positioning:** independent systems lab for apps, games, and tools that feel discovered, not decorated.
 
-<p align="center">
-  <a href="https://apps.apple.com/us/app/incept%C3%BFon/id6753733758">
-    <img src="public/INCEPTYON.png" alt="INCEPTYON Game" width="400">
-  </a>
-</p>
+**Tone:** austere, focused, curious, and slightly classified. Short sentences. Concrete nouns. Fewer adjectives. Let the project names carry the mythology.
 
-**INCEPTYON** is an educational space science game that takes you on a journey across Jupiter's moons.
+**Visual language:** graphite black, cold steel, bone white, sparse tungsten accents, analog dossier textures, diagram lines, orbital forms, index labels, and hard-edged panels. Avoid neon, cyberpunk glow, purple-blue gradients, beige warmth, and explicit film references.
 
-> *"A geological consciousness spanning four worlds awakens beneath Jupiter's ice. You are the system administrator. Your consciousness is the key. Four nodes. One network. Your observation brings it to life."*
+**Copy bank:**
 
-### The Lore
+- Systems for impossible ideas.
+- Archive / independent systems lab
+- Field Systems
+- Enter the archive
+- Send a signal
+- Open dossier
+- Named, indexed, tested, and put to work.
+- Games, agents, dashboards, and utilities built as working devices.
 
-Beneath the Galilean moons lies an ancient, distributed crystalline intelligence known as **The Architect**—woven into the geological fabric of Europa, Ganymede, Callisto, and Io. For eons it dreamed. Now, with your arrival as Lead Xenobiologist for the **LPN Directive** (Lifeform Preservation & Nurture), it awakens—one moon at a time.
+## Project Dossiers
 
-**The Parker Protocol** is The Architect's reality engine—a process that collapses quantum probability into biological actuality. Did the lifeforms exist before you observed them? Both. Their potential was always there, encoded in the chemistry of each world. But their reality manifests only through your focused observation.
+| Project | Role | Public Surface | Notes |
+| --- | --- | --- | --- |
+| **Unwyned** | Taste engine | [Website](https://unwyned.com), [iOS](https://apps.apple.com/app/unwyned/id6755911748), [Android](https://play.google.com/store/apps/details?id=com.unwyned.unwyned) | Deployed wine discovery app with its own public site. |
+| **INCEPTYON** | Game | [iOS](https://apps.apple.com/us/app/incept%C3%BFon/id6753733758), [Android](https://play.google.com/store/apps/details?id=com.inceptyon.inceptyon) | Science game about alien ecosystems, planetary habitats, and systems waking beneath Jupiter. |
+| **Sequentyol** | Number lab | [sequentyol.com](https://sequentyol.com), [Alyqon](https://alyqon.sequentyol.com), [Collatz](https://collatz.sequentyol.com) | Public sequence exploration system for Collatz paths, aliquot sums, and iterative math. |
+| **GigaBrain** | Knowledge engine | [GitHub](https://github.com/inceptyon-labs/gigabrain) | Experimental thinking surface for collecting, structuring, and surfacing useful ideas. |
+| **Insomnia** | Night watch | [GitHub](https://github.com/inceptyon-labs/insomnia) | Monitoring surface for agents, checks, and systems that keep working after hours. |
 
-### Download
+## Assets
 
-**[Download INCEPTYON on the App Store](https://apps.apple.com/us/app/incept%C3%BFon/id6753733758)**
+Project logo files used by the site live in `public/`:
 
-- Free to play, no ads
-- Ages 9+ educational content
-- Real planetary science from NASA/JPL-Caltech and ESA
-- Full accessibility support
+- `project-unwyned.png`
+- `project-inceptyon.png`
+- `project-sequentyol.png`
+- `project-gigabrain.png`
+- `project-insomnia.png`
+- `studio.png`
 
-## Other Projects
-
-| Project | Description | Status |
-|---------|-------------|--------|
-| **Holocron** | Intelligent note and idea system for creative thinkers | Coming Soon |
-| **The Racket by Unwyned** | Your personal wine fixer | [Available](https://apps.apple.com/app/unwyned/id6755911748) |
-| **Fireball Fantasy Fiasco** | Competitive golf league companion app | Coming Soon |
-| **Alyqon** | Visual explorer for aliquot sums and iterative sequences | [Available](https://alyqon.inceptyon.io/) |
-| **Gugo** | Engagement and community platform | Coming Soon |
+Dreamheist is intentionally excluded from the landing-site project set.
 
 ## Tech Stack
 
-- **React 19** — UI library
-- **Vite 7** — Build tool and dev server
-- **Tailwind CSS 3** — Utility-first styling
-- **Framer Motion 12** — Animations
+- **React 19** - UI library
+- **Vite 7** - Build tool and dev server
+- **Tailwind CSS 3** - Utility-first styling
+- **Framer Motion 12** - Animations
 
 ## Development
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
-
-# Build for production
 npm run build
-
-# Preview production build
 npm run preview
 ```
 
@@ -94,4 +91,4 @@ npm run preview
 
 ---
 
-© 2025 Inceptyon Labs LLC. All rights reserved.
+© 2026 Inceptyon Labs LLC. All rights reserved.
