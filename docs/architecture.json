@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Inceptyon Website Overview",
+    "output": ".archify/architecture-inceptyon-website-overview-20261003-200953/inceptyon-website-overview.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "git@github.com:inceptyon-labs/inceptyon-website.git",
+      "link_mode": "local-only",
+      "revision": "742fafbfd57c5d3fef1b88efb54f3d1c64766570"
+    }
+  },
+  "components": [
+    { "id": "visitor", "type": "external", "label": "Visitor", "sublabel": "browser", "pos": [40, 340], "size": [130, 60],
+      "sources": [{ "path": "index.html", "line": 9, "label": "canonical inceptyon.io" }] },
+    { "id": "cf", "type": "cloud", "label": "Cloudflare Pages", "sublabel": "CDN, serves dist/", "pos": [290, 340], "size": [140, 60], "tag": "inceptyon.io",
+      "sources": [{ "path": "AGENTS.md", "line": 7, "label": "deployed to Cloudflare Pages" }, { "path": "AGENTS.md", "line": 18, "label": "push to main auto-deploys" }] },
+    { "id": "assets", "type": "cloud", "label": "Static assets", "sublabel": "public/ files", "pos": [290, 510], "size": [140, 60],
+      "sources": [{ "path": "public/api/version.json", "line": 1, "end_line": 7, "label": "version.json" }, { "path": "public/robots.txt", "line": 1, "end_line": 4 }] },
+    { "id": "og", "type": "backend", "label": "OG image script", "sublabel": "build-time Node", "pos": [40, 510], "size": [130, 60],
+      "sources": [{ "path": "package.json", "line": 8, "label": "build runs og first" }, { "path": "scripts/generate-og.js", "line": 14, "label": "imports PROJECTS" }, { "path": "scripts/generate-og.js", "line": 217, "label": "writes PNG" }] },
+    { "id": "shell", "type": "frontend", "label": "HTML shell", "sublabel": "index.html, main.jsx", "pos": [540, 340], "size": [140, 60],
+      "sources": [{ "path": "index.html", "line": 82, "end_line": 83 }, { "path": "src/main.jsx", "line": 6, "end_line": 10 }] },
+    { "id": "app", "type": "frontend", "label": "App", "sublabel": "section layout", "pos": [790, 340], "size": [130, 60],
+      "sources": [{ "path": "src/App.jsx", "line": 11, "end_line": 21 }] },
+    { "id": "sections", "type": "frontend", "label": "Page sections", "sublabel": "Hero, Work, Contact", "pos": [1040, 340], "size": [140, 60],
+      "sources": [{ "path": "src/App.jsx", "line": 15, "end_line": 18 }, { "path": "src/components/Work.jsx", "line": 136, "end_line": 141 }, { "path": "src/hooks/useNow.js", "line": 5, "end_line": 14, "label": "1s clock tick" }] },
+    { "id": "catalog", "type": "frontend", "label": "Project catalog", "sublabel": "lib/projects.js", "pos": [1040, 170], "size": [140, 60],
+      "sources": [{ "path": "src/lib/projects.js", "line": 7, "end_line": 8 }, { "path": "src/components/Work.jsx", "line": 5, "label": "Work reads PROJECTS" }] },
+    { "id": "drawer", "type": "frontend", "label": "Dossier drawer", "sublabel": "project detail", "pos": [1040, 510], "size": [140, 60],
+      "sources": [{ "path": "src/components/Work.jsx", "line": 182, "end_line": 186 }, { "path": "src/components/DossierDrawer.jsx", "line": 24, "end_line": 26 }] },
+    { "id": "fonts", "type": "external", "label": "Google Fonts", "sublabel": "Geist, JetBrains Mono", "pos": [540, 20], "size": [140, 60],
+      "sources": [{ "path": "index.html", "line": 77, "end_line": 79 }] },
+    { "id": "outbound", "type": "external", "label": "Project links", "sublabel": "GitHub, stores, mailto", "pos": [1330, 340], "size": [140, 60],
+      "sources": [{ "path": "src/components/Work.jsx", "line": 111, "end_line": 117 }, { "path": "src/components/Contact.jsx", "line": 91, "end_line": 101 }, { "path": "src/components/DossierDrawer.jsx", "line": 230, "end_line": 238 }] }
+  ],
+  "boundaries": [
+    { "kind": "security-group", "label": "Visitor browser (client-side only)", "wraps": ["shell", "app", "sections", "catalog", "drawer"] },
+    { "kind": "region", "label": "Cloudflare Pages (static hosting)", "wraps": ["cf", "assets"] }
+  ],
+  "connections": [
+    { "id": "visit", "from": "visitor", "to": "cf", "label": "HTTPS GET", "variant": "emphasis" },
+    { "id": "serve", "from": "cf", "to": "shell", "label": "serves bundle", "variant": "emphasis" },
+    { "id": "mount", "from": "shell", "to": "app", "label": "mounts App", "variant": "emphasis" },
+    { "id": "compose", "from": "app", "to": "sections", "label": "composes", "variant": "emphasis" },
+    { "id": "read-catalog", "from": "sections", "to": "catalog", "label": "reads PROJECTS", "fromSide": "top", "toSide": "bottom" },
+    { "id": "open-drawer", "from": "sections", "to": "drawer", "label": "inspect", "fromSide": "bottom", "toSide": "top" },
+    { "id": "link-out", "from": "sections", "to": "outbound", "label": "links out", "variant": "dashed" },
+    { "id": "load-fonts", "from": "shell", "to": "fonts", "label": "stylesheet", "variant": "dashed", "fromSide": "top", "toSide": "bottom" },
+    { "id": "serve-assets", "from": "cf", "to": "assets", "label": "static files", "fromSide": "bottom", "toSide": "top" },
+    { "id": "write-og", "from": "og", "to": "assets", "label": "writes og PNGs", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Primary path", "items": ["Visitor loads inceptyon.io from Cloudflare Pages", "index.html mounts React App, which composes the page sections", "No backend or API: the site is static"] },
+    { "dot": "amber", "title": "Trust boundaries", "items": ["All logic runs in the visitor browser; Cloudflare only serves files", "External links open with target=_blank and rel=noopener noreferrer", "No env vars, API keys, or fetch calls in src/"] },
+    { "dot": "slate", "title": "Supporting detail", "items": ["Hero, NavBar and Footer share a 1s useNow clock; Chronograph renders it", "Dossier drawer shows DossierSchematic per project slug", "public/api/version.json is a static file read by the INCEPTYON app (consumer not in this repo)"] }
+  ]
+}

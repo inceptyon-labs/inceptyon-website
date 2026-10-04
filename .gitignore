@@ -48,3 +48,6 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+
+# Archify diagram output (local, regenerated on demand)
+.archify/
