@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Ithaca by Inceptyon Labs</title>
+    <meta name="description" content="Ithaca Privacy Policy. Ithaca sends nothing to Inceptyon Labs. No analytics, no ads, no tracking.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://inceptyon.io/ithaca/privacy.html" />
+    <style>
+        :root {
+            --ink: #08090b;
+            --ink-raised: #111318;
+            --hairline: #2a2e36;
+            --steel: #8b93a1;
+            --bone: #f2f2f7;
+            --text: #c4c8d0;
+            --muted: #7d838f;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            background: var(--ink);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .wrap { max-width: 640px; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
+        header { text-align: center; padding-bottom: 2.5rem; }
+        .kicker {
+            font-size: 12px; font-weight: 600; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--steel);
+        }
+        h1 { font-size: 2rem; font-weight: 700; color: var(--bone); margin-top: 0.75rem; }
+        .updated { font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem; }
+        .rule { border: none; height: 1px; background: var(--hairline); margin: 2.5rem auto; width: 100%; }
+        h2 { font-size: 1.2rem; font-weight: 600; color: var(--bone); margin: 2.25rem 0 0.75rem; }
+        p + p { margin-top: 1rem; }
+        ul { margin: 0.75rem 0 0 1.25rem; }
+        li { margin-top: 0.5rem; }
+        strong { color: var(--bone); font-weight: 600; }
+        a { color: var(--bone); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--steel); }
+        .plate {
+            background: var(--ink-raised); border: 1px solid var(--hairline);
+            border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+        }
+        footer { margin-top: 4rem; text-align: center; font-size: 0.85rem; color: var(--muted); }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="kicker">Ithaca</div>
+            <h1>Privacy Policy</h1>
+            <div class="updated">Effective November 5, 2026</div>
+        </header>
+
+        <div class="plate">
+            <p><strong>The short version:</strong> Ithaca sends nothing to Inceptyon Labs. There are no analytics, no ads, no tracking and no Inceptyon server. The app talks to Plex and to the servers you connect it to.</p>
+        </div>
+
+        <h2>What Ithaca connects to</h2>
+        <ul>
+            <li><strong>Plex.</strong> You sign in with your Plex account at plex.tv. Ithaca then talks to plex.tv and to your Plex Media Servers to show your libraries, play your media, and keep your watch progress, watched state and ratings in sync. Each request carries your Plex sign-in token, the app's name and version, a random identifier for this installation, and your device's name, model and system version. Plex and the owner of each server handle that data under their own terms. See the <a href="https://www.plex.tv/about/privacy-legal/">Plex privacy policy</a>.</li>
+            <li><strong>Seerr (optional).</strong> If you add a Seerr server, Ithaca signs in to it with your Plex account and sends your searches and requests to that server. Artwork for those titles loads through the same server.</li>
+            <li><strong>Mentor (optional).</strong> Describe It needs a Mentor server that you or your server's owner runs. When you use it, Ithaca sends that server what you typed, the titles in your library that fit the screen's filters, and which titles you have watched and how you rated them. Mentor passes this to Anthropic's Claude API under the API key of whoever runs that server. Nothing is sent unless you set a Mentor address and use Describe It.</li>
+        </ul>
+
+        <h2>What stays on your device</h2>
+        <ul>
+            <li>Your Plex sign-in token and Seerr session, in the system Keychain. Signing out removes them.</li>
+            <li>Your settings, cached artwork and downloaded media.</li>
+            <li>On Apple TV, the list of titles shown in the Top Shelf.</li>
+        </ul>
+
+        <h2>System features</h2>
+        <ul>
+            <li><strong>Local network.</strong> Ithaca asks for local network access to find and reach Plex servers on your Wi-Fi.</li>
+            <li><strong>Siri.</strong> Ithaca registers the titles you are most likely to ask for (recently watched and recently added) with Siri on your device, so that "Play a title in Ithaca" works. Apple handles Siri requests under its own privacy policy.</li>
+            <li><strong>SharePlay.</strong> When you start Watch Together, Ithaca shares the title and the playback position with the people in that session through Apple's SharePlay. Sign-in tokens and playback addresses are never shared; each person plays from their own Plex account.</li>
+            <li><strong>Notifications.</strong> On iPhone and iPad, notices that a request has arrived are created on your device after Ithaca checks your Seerr server. No push service is involved.</li>
+        </ul>
+
+        <h2>What Ithaca does not do</h2>
+        <ul>
+            <li>No data is collected by Inceptyon Labs. We cannot see what you watch, or that you use the app at all.</li>
+            <li>No third-party analytics, advertising SDKs or trackers.</li>
+            <li>No Inceptyon account, sign-up or email address.</li>
+        </ul>
+
+        <h2>Children's privacy</h2>
+        <p>Inceptyon Labs collects no personal information from anyone through Ithaca, including children.</p>
+
+        <h2>Changes</h2>
+        <p>If a future version of Ithaca changes any of the above, this policy will be updated first and the effective date above will change.</p>
+
+        <hr class="rule">
+
+        <h2>Contact</h2>
+        <p>Questions about this policy: <a href="mailto:support@inceptyon.io">support@inceptyon.io</a></p>
+
+        <footer>
+            Inceptyon Labs LLC · Tampa, Florida<br>
+            <a href="https://inceptyon.io">inceptyon.io</a>
+        </footer>
+    </div>
+</body>
+</html>
