@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Argo by Inceptyon Labs</title>
+    <meta name="description" content="Argo Privacy Policy. Video and snapshots go only between your device and your own Frigate server. No accounts, no ads, no analytics, no tracking.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://inceptyon.io/argo/privacy.html" />
+    <style>
+        :root {
+            --sky-top: #2C66A8;
+            --sky-mid: #4A7FBA;
+            --sky-bottom: #7397C0;
+            --module: rgba(66, 73, 84, 0.55);
+            --ink: #ffffff;
+            --ink-soft: rgba(255, 255, 255, 0.86);
+            --ink-muted: rgba(255, 255, 255, 0.7);
+            --rule: rgba(255, 255, 255, 0.25);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+            background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 50%, var(--sky-bottom) 100%) fixed;
+            background-color: var(--sky-top);
+            color: var(--ink-soft);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        .wrap { max-width: 660px; margin: 0 auto; padding: 4rem 1rem 6rem; }
+        header { text-align: center; padding-bottom: 2rem; }
+        .kicker { font-size: 0.95rem; font-weight: 600; color: var(--ink); }
+        h1 { font-size: 2.6rem; font-weight: 300; color: var(--ink); line-height: 1.15; margin-top: 0.25rem; }
+        .updated { font-size: 0.95rem; color: var(--ink-muted); margin-top: 0.5rem; }
+        .module { background: var(--module); border-radius: 16px; padding: 1.25rem 1.4rem; margin: 1.25rem 0; }
+        h2 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2.25rem 0 0.6rem; }
+        p + p, ul + p { margin-top: 0.9rem; }
+        ul { margin: 0.6rem 0 0 1.2rem; }
+        li { margin-top: 0.4rem; }
+        strong { color: var(--ink); font-weight: 600; }
+        a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); }
+        hr { border: none; height: 1px; background: var(--rule); margin: 2.5rem 0; }
+        footer { margin-top: 3rem; text-align: center; font-size: 0.9rem; color: var(--ink-muted); }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="kicker">Argo for Frigate</div>
+            <h1>Privacy Policy</h1>
+            <div class="updated">Effective November 19, 2026</div>
+        </header>
+
+        <div class="module">
+            <p><strong>The short version:</strong> Argo connects straight to your own Frigate server. Your video, snapshots and clips go only between your device and that server; we never see them. Argo has no accounts, no ads, no analytics and no tracking. If you turn on notifications, a small relay we run passes Frigate's alerts to Apple without being able to read them.</p>
+        </div>
+
+        <h2>What stays on your device</h2>
+        <p>Your Frigate address, username and password, the certificate you chose to trust, and your Frigate login token are kept in the iOS Keychain on this device only. They are not included in backups that go to another device. Your settings (camera names, which alerts are quiet, and where home is if you set it) also stay on the device. Signing out removes the login.</p>
+
+        <h2>Your Frigate server</h2>
+        <p>Everything you watch in Argo, live video, sound, snapshots, clips and alert details, comes directly from the Frigate server you sign in to, over your home network or your own VPN such as Tailscale. When you talk through a camera, your voice goes directly to your Frigate server. Inceptyon Labs is not involved in any of this and has no access to your server.</p>
+
+        <h2>Notifications</h2>
+        <p>Notifications are optional. When you turn them on, Argo registers your device with the Argo relay, a service run by Inceptyon Labs on Cloudflare. The relay stores:</p>
+        <ul>
+            <li>the push token Apple gives this app on your device,</li>
+            <li>a random ID for your device, and a hashed key that lets only the app change or delete that record,</li>
+            <li>your Frigate server's public notification key, so it accepts alerts only from your server,</li>
+            <li>whether notifications are paused, and when the last alert was delivered (kept for 30 days).</li>
+        </ul>
+        <p>Frigate encrypts each alert for your device before sending it. The relay passes the encrypted alert to Apple's push service unchanged and cannot read it; Argo decrypts it on your device and fetches the picture from your own Frigate server. The relay keeps no record of alert contents. Like any web service, Cloudflare sees your device's IP address when Argo contacts the relay, and the relay uses it briefly to limit sign-ups; it does not store it.</p>
+        <p>Turning notifications off pauses delivery. Signing out deletes your device's record from the relay.</p>
+
+        <h2>Location</h2>
+        <p>If you ask Argo to keep alerts quiet while you're home, it uses iOS region monitoring to learn only whether you are within about 150 metres of the place you set as home. Your location stays on your device and is never sent to us or to your Frigate server. Without this setting, Argo does not use location at all.</p>
+
+        <h2>Microphone and photos</h2>
+        <p>Argo uses the microphone only while you are talking through a camera, and only after you allow it. It adds clips to your photo library only when you choose to save one.</p>
+
+        <h2>What Argo does not do</h2>
+        <ul>
+            <li>No accounts with us, no sign-up, no email address.</li>
+            <li>No analytics, advertising SDKs or trackers.</li>
+            <li>No cloud recording. Video is never uploaded anywhere by Argo.</li>
+            <li>No selling or sharing of data, because we don't collect any beyond what the relay needs to deliver notifications.</li>
+        </ul>
+        <p>If you share analytics with app developers in iOS Settings, Apple may send us anonymous crash reports. That is controlled by Apple and you.</p>
+
+        <h2>Children's privacy</h2>
+        <p>Argo collects no personal information from anyone, including children.</p>
+
+        <h2>Changes</h2>
+        <p>If a future version of Argo changes any of the above, this policy will be updated first and the effective date above will change.</p>
+
+        <hr>
+
+        <h2>Contact</h2>
+        <p>Questions about this policy: <a href="mailto:support@inceptyon.io">support@inceptyon.io</a></p>
+
+        <footer>
+            Argo is an independent app. It is not made or endorsed by the Frigate project.<br>
+            Inceptyon Labs LLC · Tampa, Florida · <a href="https://inceptyon.io">inceptyon.io</a> · <a href="support.html">Support</a>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support — Argo by Inceptyon Labs</title>
+    <meta name="description" content="Help with Argo, the iPhone and iPad app for Frigate NVR: signing in, notifications, two-way talk and the demo.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://inceptyon.io/argo/support.html" />
+    <style>
+        :root {
+            --sky-top: #2C66A8;
+            --sky-mid: #4A7FBA;
+            --sky-bottom: #7397C0;
+            --module: rgba(66, 73, 84, 0.55);
+            --ink: #ffffff;
+            --ink-soft: rgba(255, 255, 255, 0.86);
+            --ink-muted: rgba(255, 255, 255, 0.7);
+            --rule: rgba(255, 255, 255, 0.25);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+            background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 50%, var(--sky-bottom) 100%) fixed;
+            background-color: var(--sky-top);
+            color: var(--ink-soft);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        .wrap { max-width: 660px; margin: 0 auto; padding: 4rem 1rem 6rem; }
+        header { text-align: center; padding-bottom: 2rem; }
+        .kicker { font-size: 0.95rem; font-weight: 600; color: var(--ink); }
+        h1 { font-size: 2.6rem; font-weight: 300; color: var(--ink); line-height: 1.15; margin-top: 0.25rem; }
+        .updated { font-size: 0.95rem; color: var(--ink-muted); margin-top: 0.5rem; }
+        .module { background: var(--module); border-radius: 16px; padding: 1.25rem 1.4rem; margin: 1.25rem 0; }
+        h2 { font-size: 1.15rem; font-weight: 600; color: var(--ink); margin: 2.25rem 0 0.6rem; }
+        p + p, ul + p { margin-top: 0.9rem; }
+        ul { margin: 0.6rem 0 0 1.2rem; }
+        li { margin-top: 0.4rem; }
+        strong { color: var(--ink); font-weight: 600; }
+        a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule); }
+        hr { border: none; height: 1px; background: var(--rule); margin: 2.5rem 0; }
+        footer { margin-top: 3rem; text-align: center; font-size: 0.9rem; color: var(--ink-muted); }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="kicker">Argo for Frigate</div>
+            <h1>Support</h1>
+        </header>
+
+        <div class="module">
+            <p>The fastest way to reach us is email: <a href="mailto:support@inceptyon.io">support@inceptyon.io</a>. A real person reads it, usually within a day or two.</p>
+        </div>
+
+        <h2>What do I need?</h2>
+        <p>A <a href="https://frigate.video">Frigate</a> NVR server that your iPhone or iPad can reach: on your home Wi-Fi, or away from home over a VPN such as Tailscale. Argo is tested with Frigate 0.18. Everyone in the house signs in with their own Frigate login, which whoever runs Frigate can add in Frigate's settings.</p>
+
+        <h2>Can I try it without a server?</h2>
+        <p>Yes. On the sign-in screen, tap <strong>Try it with sample cameras</strong>. You can leave the demo from Settings at any time.</p>
+
+        <h2>What address do I type?</h2>
+        <p>The address you open Frigate at, such as <code>192.168.1.20</code> or <code>frigate.local</code>. Argo signs in over https on Frigate's login port, 8971. If your Frigate uses its own certificate, Argo shows its fingerprint and asks you to trust it once; after that it refuses any other certificate.</p>
+
+        <h2>Notifications don't arrive</h2>
+        <ul>
+            <li>Frigate's own notifications must be on: in Frigate, open Settings, then Notifications.</li>
+            <li>Frigate reads new notification sign-ups only when it starts. After turning notifications on in Argo, restart Frigate (admins can do it from Argo's Settings).</li>
+            <li>The Frigate server needs internet access to send alerts.</li>
+            <li>Check that notifications are allowed for Argo in iOS Settings.</li>
+        </ul>
+
+        <h2>Two-way talk doesn't work</h2>
+        <p>The camera needs a speaker that go2rtc can reach (its "backchannel"), and Frigate's <code>go2rtc.webrtc.candidates</code> must list an address your device can reach on port 8555, the same setup talk needs in Frigate's own page.</p>
+
+        <h2>Is my video uploaded anywhere?</h2>
+        <p>No. Video and snapshots go only between your device and your Frigate server. Details in the <a href="privacy.html">privacy policy</a>.</p>
+
+        <h2>Is Argo made by the Frigate team?</h2>
+        <p>No. Argo is an independent app by Inceptyon Labs. Frigate's own web interface stays the place to set up cameras, zones and users; Argo is for watching, alerts and playback.</p>
+
+        <hr>
+
+        <footer>
+            Inceptyon Labs LLC · Tampa, Florida<br>
+            <a href="https://inceptyon.io">inceptyon.io</a> · <a href="privacy.html">Privacy Policy</a>
+        </footer>
+    </div>
+</body>
+</html>
