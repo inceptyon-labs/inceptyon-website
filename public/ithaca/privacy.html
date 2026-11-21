@@ -52,7 +52,7 @@
         <header>
             <div class="kicker">Ithaca</div>
             <h1>Privacy Policy</h1>
-            <div class="updated">Effective November 5, 2026</div>
+            <div class="updated">Effective November 21, 2026</div>
         </header>
 
         <div class="plate">
@@ -62,13 +62,16 @@
         <h2>What Ithaca connects to</h2>
         <ul>
             <li><strong>Plex.</strong> You sign in with your Plex account at plex.tv. Ithaca then talks to plex.tv and to your Plex Media Servers to show your libraries, play your media, and keep your watch progress, watched state and ratings in sync. Each request carries your Plex sign-in token, the app's name and version, a random identifier for this installation, and your device's name, model and system version. Plex and the owner of each server handle that data under their own terms. See the <a href="https://www.plex.tv/about/privacy-legal/">Plex privacy policy</a>.</li>
-            <li><strong>Seerr (optional).</strong> If you add a Seerr server, Ithaca signs in to it with your Plex account and sends your searches and requests to that server. Artwork for those titles loads through the same server.</li>
-            <li><strong>Mentor (optional).</strong> Describe It needs a Mentor server that you or your server's owner runs. When you use it, Ithaca sends that server what you typed, the titles in your library that fit the screen's filters, and which titles you have watched and how you rated them. Mentor passes this to Anthropic's Claude API under the API key of whoever runs that server. Nothing is sent unless you set a Mentor address and use Describe It.</li>
+            <li><strong>Seerr (optional).</strong> If you add a Seerr server, Ithaca signs in to it with your Plex account and sends your searches and requests to that server. Artwork for those titles loads through the same server when it caches images, and otherwise straight from TMDB's image server (image.tmdb.org), which sees an ordinary image request from your device.</li>
+            <li><strong>Describe It.</strong> Describe It runs on your device. On iPhone and iPad with Apple Intelligence turned on, Apple's on-device model reads what you typed; elsewhere, Ithaca's own matching does. Either way, Ithaca picks from your library on the device, and what you typed doesn't leave it.</li>
+            <li><strong>Mentor (optional).</strong> If you or your server's owner runs a Mentor server, Ithaca asks before Describe It first uses it. If you agree, Ithaca sends that server what you typed, the titles in your library that fit the screen's filters, and which titles you have watched and how you rated them. Mentor passes this to Anthropic's Claude API under the API key of whoever runs that server. Nothing is sent unless you agree, and you can turn it off in Settings → Mentor.</li>
+            <li><strong>In-app purchases.</strong> The Ithaca Pro trial and purchase go through Apple's App Store, and Apple handles the payment. Ithaca reads only whether your Apple Account owns Ithaca Pro, from StoreKit on your device. Inceptyon Labs receives no payment details or personal information from it.</li>
         </ul>
 
         <h2>What stays on your device</h2>
         <ul>
             <li>Your Plex sign-in token and Seerr session, in the system Keychain. Signing out removes them.</li>
+            <li>Whether this Apple Account owns Ithaca Pro or started its trial, also in the Keychain.</li>
             <li>Your settings, cached artwork and downloaded media.</li>
             <li>On Apple TV, the list of titles shown in the Top Shelf.</li>
         </ul>
