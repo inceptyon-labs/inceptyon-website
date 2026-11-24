@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support — Siren by Inceptyon Labs</title>
+    <meta name="description" content="Support for Siren, the Audiobookshelf app for iPhone, iPad and Apple Watch.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://inceptyon.io/siren/support.html" />
+    <style>
+        :root {
+            --ink: #08090b;
+            --ink-raised: #111318;
+            --hairline: #2a2e36;
+            --steel: #8b93a1;
+            --bone: #f2f2f7;
+            --text: #c4c8d0;
+            --muted: #7d838f;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            background: var(--ink);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .wrap { max-width: 640px; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
+        header { text-align: center; padding-bottom: 2.5rem; }
+        .kicker {
+            font-size: 12px; font-weight: 600; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--steel);
+        }
+        h1 { font-size: 2rem; font-weight: 700; color: var(--bone); margin-top: 0.75rem; }
+        .updated { font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem; }
+        .rule { border: none; height: 1px; background: var(--hairline); margin: 2.5rem auto; width: 100%; }
+        h2 { font-size: 1.2rem; font-weight: 600; color: var(--bone); margin: 2.25rem 0 0.75rem; }
+        p + p { margin-top: 1rem; }
+        ul { margin: 0.75rem 0 0 1.25rem; }
+        li { margin-top: 0.5rem; }
+        strong { color: var(--bone); font-weight: 600; }
+        a { color: var(--bone); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--steel); }
+        .plate {
+            background: var(--ink-raised); border: 1px solid var(--hairline);
+            border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+        }
+        footer { margin-top: 4rem; text-align: center; font-size: 0.85rem; color: var(--muted); }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="kicker">Siren Audiobooks</div>
+            <h1>Support</h1>
+        </header>
+
+        <div class="plate">
+            <p>The fastest way to reach us is email: <a href="mailto:support@inceptyon.io">support@inceptyon.io</a>. A real person reads it, usually within a day or two.</p>
+        </div>
+
+        <h2>What do I need?</h2>
+        <p>An <a href="https://www.audiobookshelf.org">Audiobookshelf</a> server with your audiobooks, your own or one someone in your household runs, and an account on it. At home, Siren reaches the server over your Wi-Fi. Away from home, the server needs an address you can reach from outside, or a VPN back to it. Books you download keep playing without the server.</p>
+
+        <h2>Signing in with OpenID Connect</h2>
+        <p>If your server uses single sign-on, add <strong>siren://oauth</strong> to <strong>Allowed Mobile Redirect URIs</strong> under Settings → Authentication on the server, then sign in from Siren.</p>
+
+        <h2>Is my listening sent anywhere?</h2>
+        <p>Not to us. Siren talks only to your Audiobookshelf server, and nothing goes to Inceptyon Labs. Details in the <a href="privacy.html">privacy policy</a>.</p>
+
+        <h2>Is Siren made by Audiobookshelf?</h2>
+        <p>No. Siren is an independent app by Inceptyon Labs and is not made or endorsed by the Audiobookshelf project.</p>
+
+        <hr class="rule">
+
+        <footer>
+            Inceptyon Labs LLC · Tampa, Florida<br>
+            <a href="https://inceptyon.io">inceptyon.io</a> · <a href="privacy.html">Privacy Policy</a>
+        </footer>
+    </div>
+</body>
+</html>
