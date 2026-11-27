@@ -71,7 +71,7 @@ export const PROJECTS = [
     slug: 'gargantua',
     title: 'Gargantua',
     domain: 'SYSTEM HYGIENE',
-    status: 'IN-DEVELOPMENT',
+    status: 'DEPLOYED',
     classification: 'A native macOS system cleaner.',
     signal: 'Quiet machines.',
     description:
@@ -82,9 +82,10 @@ export const PROJECTS = [
     latest_release: D(2026, 4, 5),
     logo: '/project-gargantua.png',
     links: [
+      { label: 'WEBSITE', href: 'https://gargantua.inceptyon.io' },
       { label: 'GITHUB', href: 'https://github.com/inceptyon-labs/gargantua' },
     ],
-    primary_link: 'https://github.com/inceptyon-labs/gargantua',
+    primary_link: 'https://gargantua.inceptyon.io',
   },
   {
     code: '05',

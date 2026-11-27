@@ -5,7 +5,7 @@ This directory contains all public-facing pages for the Inceptyon Labs website, 
 ## INCEPTŸON Legal Pages (App Store Required)
 
 ### ✅ privacy.html (18 KB)
-**URL:** https://inceptyon.com/privacy.html
+**URL:** https://inceptyon.io/privacy.html
 **Status:** REQUIRED for App Store submission
 
 Complete COPPA-compliant privacy policy:
@@ -15,7 +15,7 @@ Complete COPPA-compliant privacy policy:
 - Educational content sources
 
 ### ✅ support.html (21 KB)
-**URL:** https://inceptyon.com/support.html
+**URL:** https://inceptyon.io/support.html
 **Status:** REQUIRED for App Store submission
 
 Comprehensive FAQ and troubleshooting:
@@ -27,7 +27,7 @@ Comprehensive FAQ and troubleshooting:
 - Common issues & fixes
 
 ### ✅ terms.html (17 KB)
-**URL:** https://inceptyon.com/terms.html
+**URL:** https://inceptyon.io/terms.html
 **Status:** Optional but recommended
 
 End User License Agreement:
@@ -38,7 +38,7 @@ End User License Agreement:
 - Liability limitations
 
 ### ✅ inceptyon.html (23 KB)
-**URL:** https://inceptyon.com/inceptyon.html
+**URL:** https://inceptyon.io/inceptyon.html
 **Status:** Marketing page
 
 INCEPTŸON landing page:
@@ -71,9 +71,9 @@ INCEPTŸON landing page:
 - `Hillsborough County, Florida` → e.g., "San Francisco County, California"
 
 **Set up these email addresses:**
-- support@inceptyon.com (general support)
-- privacy@inceptyon.com (privacy inquiries)
-- legal@inceptyon.com (legal inquiries)
+- support@inceptyon.io (general support)
+- privacy@inceptyon.io (privacy inquiries)
+- legal@inceptyon.io (legal inquiries)
 
 **Update App Store links in inceptyon.html:**
 - Replace `#` with actual App Store URL after submission
@@ -96,12 +96,12 @@ These pages are static HTML and will be served directly from the `public/` folde
 
 When deploying to Cloudflare Pages or similar:
 - All `.html` files will be accessible at root
-- Example: `privacy.html` → `https://inceptyon.com/privacy.html`
-- Or: `https://inceptyon.com/privacy` (if server auto-appends .html)
+- Example: `privacy.html` → `https://inceptyon.io/privacy.html`
+- Or: `https://inceptyon.io/privacy` (if server auto-appends .html)
 
 ## Contact
 
-For questions: support@inceptyon.com
+For questions: support@inceptyon.io
 
 ---
 

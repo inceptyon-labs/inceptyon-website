@@ -1,0 +1,38 @@
+# Inceptyon Labs
+
+> Inceptyon Labs LLC is an independent software studio in Tampa, FL, established 2024. It builds apps, games, agents, dashboards, and experimental tools across consumer software, infrastructure, and generative systems. The studio keeps a catalog rather than a roadmap: each project is a self-contained entry.
+
+## Studio facts
+
+- **Name:** Inceptyon Labs LLC
+- **Location:** Tampa, Florida, USA
+- **Established:** 2024-03-12
+- **Contact:** hello@inceptyon.io
+- **GitHub:** https://github.com/inceptyon-labs
+- **X:** https://x.com/inceptyonlabs
+
+## Catalog
+
+- **Unwyned:** a free wine recommendation app that scans wine lists and ranks them for your taste profile. iOS, Android. https://unwyned.com
+- **Sequentyol:** a public mathematics site for exploring integer sequences and their structure. Web. https://sequentyol.com
+- **INCEPTYON (Jovian System):** a speculative-biology simulation game set on the moons of an alien gas giant. iOS, Android. https://apps.apple.com/us/app/incept%C3%BFon/id6753733758 ([game page](https://inceptyon.io/inceptyon))
+- **Gargantua:** a native macOS cleaner for developers where every file traces to a public safety rule. Open source. https://gargantua.inceptyon.io
+- **Mise:** a grocery and meal planner: lists, recipes, weekly plans, and local store deals. iOS. https://apps.apple.com/us/app/mise-from-list-to-table/id6761640072
+- **GigaBrain:** a Gigaverse dungeon-run controller with a dashboard for queues, runs, and outcomes. https://gigabrain-eosin.vercel.app/
+- **Insomnia:** a monitoring dashboard for autonomous agents and prediction-market trading bots. https://github.com/inceptyon-labs/insomnia
+- **Lensing:** a plugin-driven, always-on information dashboard for Raspberry Pi displays. https://github.com/inceptyon-labs/lensing
+- **Xenodex:** a generative bestiary of fictional organisms with on-chain provenance (concept). https://github.com/inceptyon-labs/xenodex
+- **Gulf Coast Hackers:** a golf league platform with fantasy scoring, drafts, and weekly handicap tracking. https://gulfcoasthackers.com
+- **Tenet:** a health-auditing suite for AI-agent codebases that produces a single auditable score. https://github.com/inceptyon-labs/tenet-dashboard, https://github.com/inceptyon-labs/tenet-skills
+- **PASIV:** a Claude Code plugin that takes an idea through brainstorm, plan, implement, review, and merge. https://github.com/inceptyon-labs/PASIV
+- **TARS:** a cross-platform desktop manager for Claude Code plugins, skills, commands, agents, hooks, MCP servers, and profiles. https://github.com/inceptyon-labs/TARS
+- **FoodieMerge:** a cozy merge-2 mobile game set in the farm town of Plum Hollow. iOS, Android. https://foodiemerge.com
+
+## Pages
+
+- [Home](https://inceptyon.io/): studio overview and project catalog
+- [INCEPTYON game](https://inceptyon.io/inceptyon): the Jovian moons science game for ages 9+
+- [INCEPTYON support](https://inceptyon.io/support)
+- [Privacy Policy](https://inceptyon.io/privacy)
+- [Terms of Service](https://inceptyon.io/terms)
+- App support and privacy pages: [Mise](https://inceptyon.io/mise/support), [Argo](https://inceptyon.io/argo/support), [Ephemeris](https://inceptyon.io/ephemeris/support), [Ithaca](https://inceptyon.io/ithaca/support), [Siren](https://inceptyon.io/siren/support)
